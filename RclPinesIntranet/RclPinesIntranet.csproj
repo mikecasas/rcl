@@ -4,6 +4,17 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+
+
+    <RootNamespace>RclPinesIntranet</RootNamespace>
+    <AssemblyName>RclPinesIntranet</AssemblyName>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.0.1</Version>
+    <Company>City of Pembroke Pines, Florida</Company>
+    <Authors>Technology Services Department</Authors>
+    <Description>Razor Class library</Description>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+
   </PropertyGroup>
 
 
@@ -12,8 +23,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="10.0.0" />
     <PackageReference Include="Radzen.Blazor" Version="8.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="docs\readme.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,5 +38,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+
+  <!-- Only pack on rlease. This allows for debugging -->
+  <Target Condition="'$(Configuration)' == 'Release'" Name="CopyPackage" AfterTargets="Pack">
+    <Copy SourceFiles="$(ProjectDir)\bin\Release\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="H:\pines-nuget" />
+  </Target>
 
 </Project>

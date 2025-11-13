@@ -1,5 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Blazored.LocalStorage;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Components.Authorization;
 using Radzen;
+using RclPinesIntranet.Config;
+using RclPinesIntranet.Services;
+using RclPinesIntranet.Services.Contracts;
 
 namespace RclPinesIntranet
 {
@@ -9,30 +14,24 @@ namespace RclPinesIntranet
         {
             //services.AddSingleton<WeatherForecastService>();                 
 
-            //services.AddScoped<IServiceBaseConfig, DefaultServiceBaseConfig>();
-            //services.AddScoped<IServiceBase, ServiceBase>();
-            //services.AddScoped<ITokenService, TokenService>();
+            services.AddBlazoredLocalStorage();
 
-            //services.AddScoped<IRefreshAuthenticationService, RefreshAuthenticationService>();
+            services.AddScoped<IServiceBaseConfig, DefaultServiceBaseConfig>();
+            services.AddScoped<IServiceBase, ServiceBase>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IRefreshAuthenticationService, RefreshAuthenticationService>();
 
-            //services.AddBlazoredLocalStorage();
+            services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
 
-            //services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
+            services.AddAuthorizationCore();
 
-            //services.AddAuthorizationCore();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
 
-            //services.AddScoped<IAuthenticationService, AuthenticationService>();
-
-            services.AddRadzenComponents();
-
-            //services.AddScoped<DialogService>();
-            //services.AddScoped<NotificationService>();
-            //services.AddScoped<TooltipService>();
-            //services.AddScoped<ContextMenuService>();
+            services.AddRadzenComponents();         
 
             //Utility classes for code reuse to inject into Blazor pages
-            //services.AddScoped<Notifications>();
-            //services.AddScoped<ConfigService>();
+            services.AddScoped<Notifications>();
+            services.AddScoped<ConfigService>();
 
         }
     }
