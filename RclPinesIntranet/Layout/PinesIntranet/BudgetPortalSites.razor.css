@@ -1,0 +1,77 @@
+﻿
+.wrapper {
+    /*  width: 500px;
+    height: 100%;*/
+    /* background: #fff;*/
+    /* margin: 15px auto 0;*/
+}
+
+    .wrapper .tabs_wrap {
+        padding: 15px 0px 0px 5px;
+      /*  margin-top: 5px;*/
+        /*  border-bottom: 1px solid #ebedec;*/
+    }
+        .wrapper .tabs_wrap ul {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+        }
+            .wrapper .tabs_wrap ul li {
+                
+                list-style-type: none;
+                width: 200px;
+                text-align: center;
+                background: var(--budget-portal-gray);
+                border-right: 2px solid white;
+                padding: 13px 12px;
+                display: inline-block;
+
+                /* padding: 13px 12px;*/
+
+                cursor: pointer;
+                -webkit-transition: all 0.2s ease;
+                -o-transition: all 0.2s ease;
+                transition: all 0.2s ease;
+                font-weight: 600;
+            }
+                .wrapper .tabs_wrap ul li:first-child {
+                    border-top-left-radius: 25px;
+                    border-bottom-left-radius: 25px;                    
+                }                             
+
+                .wrapper .tabs_wrap ul li:last-child {
+                    border-right: 0px;
+                    border-top-right-radius: 25px;
+                    border-bottom-right-radius: 25px;                   
+                }
+
+                .wrapper .tabs_wrap ul li:hover,
+                .wrapper .tabs_wrap ul li.active {
+                    background: var(--budget-portal-red);
+                    color: white;
+                    text-decoration: none;
+                }
+
+                .wrapper .tabs_wrap ul li.active a {
+                  
+                    color: white;
+                  
+                }
+                    .wrapper .tabs_wrap ul li:hover a {
+                        color: white;
+                    }
+
+                        .wrapper .tabs_wrap ul li:hover a:hover,
+                        .wrapper .tabs_wrap ul li:hover a:active,
+                        .wrapper .tabs_wrap ul li.active a.active,
+                        .wrapper .tabs_wrap ul li.active a.visited,
+                        .wrapper .tabs_wrap ul li.active a.hover {
+                            text-decoration: none;
+                        }
+
+                .wrapper .tabs_wrap ul li a {
+                    color: black;
+                }

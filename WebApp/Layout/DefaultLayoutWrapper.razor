@@ -1,0 +1,23 @@
+﻿@inherits LayoutComponentBase
+@* This component IS the MainLayout, plus its custom parameters. *@
+
+<RclPinesIntranet.Layout.PinesIntranet.MainLayout>
+    <NavContent>
+        <SiteSpecificNavMenu />
+    </NavContent>
+    <HeaderContent>
+
+        <RclPinesIntranet.Layout.PinesIntranet.BudgetPortalSites BaseRoute="https://localhost:9999" HighlightLinkNbr="1">
+
+        </RclPinesIntranet.Layout.PinesIntranet.BudgetPortalSites>
+
+    </HeaderContent>
+    <FooterContent>
+      
+    </FooterContent>
+    
+    @* Crucially, the ChildContent passed to this wrapper goes to the @Body of MainLayout *@
+    <Body>
+        @Body 
+    </Body>
+</RclPinesIntranet.Layout.PinesIntranet.MainLayout>

@@ -1,0 +1,107 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Budget Narratives</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+
+        <AuthorizeView>
+            <Authorized>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Files
+                    </NavLink>
+                </div>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="narratives">
+                        <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Narratives
+                    </NavLink>
+                </div>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="performance-measures">
+                        <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Performance Measures
+                    </NavLink>
+                </div>
+
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="Superuser,Budget Office,Finance Admin">
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="word-docs">
+                    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Export to Word
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="excel-export">
+                    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Export to Excel
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="pdf-download">
+                    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Pdf Files
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="view-pdfs">
+                    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> View Pdf Files
+                </NavLink>
+            </div>
+
+
+
+        </AuthorizeView>
+
+        <AuthorizeView Roles="Superuser">
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="generate-pdf-download">
+                    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Generate Pdf
+                </NavLink>
+            </div>
+
+        </AuthorizeView>
+
+        <AuthorizeView>
+            <Authorized>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="display-claims">
+                        <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> User Information
+                    </NavLink>
+                </div>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="live-edits">
+                        <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Live Edits
+                    </NavLink>
+                </div>
+            </Authorized>
+
+        </AuthorizeView>
+
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

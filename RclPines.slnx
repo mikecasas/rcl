@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="RclPinesIntranet/RclPinesIntranet.csproj" />
+  <Project Path="WebApp/WebApp.csproj" />
+</Solution>

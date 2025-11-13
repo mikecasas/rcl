@@ -1,0 +1,59 @@
+:root {
+    --transition-props-slow: 2.5s ease-in-out;
+    --transition-props-fast: 0.5s ease-in-out;
+    /* Original Blazor Blue Colors */
+    /*    --sidebar-color: rgb(5, 39, 103);
+    --sidebar-color-transition: #3a0647*/
+
+    --budget-portal-red: #8b0000;
+    --budget-portal-gray: #babcc0;
+    --budget-portal-gray-darker: #747678;
+    /*    --sidebar-color: rgb(225, 39, 103);
+    --sidebar-color-transition: #3a0647;*/
+
+    --sidebar-color: var(--budget-portal-red);
+    --sidebar-color-transition: var(--budget-portal-red);
+}
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+
+h1:focus {
+    outline: none;
+}
+
+
+/*May need thead below, not sure*/
+
+/*a, .btn-link {
+    color: #0071c1;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+.content {
+    padding-top: 1.1rem;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+*/

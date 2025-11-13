@@ -1,0 +1,40 @@
+﻿@inherits LayoutComponentBase
+
+<RadzenComponents />
+
+<div class="page">
+    <div class="sidebar">
+        @NavContent
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            @* Slot for custom header/utility content *@
+            @HeaderContent
+            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @* The main page content *@
+            @Body
+        </article>
+
+        <div class="footer-row px-4">
+            @* Slot for custom footer content *@
+            @FooterContent
+        </div>
+    </main>
+</div>
+
+@code {
+
+    // This Content will be injected where @NavContent is placed
+    [Parameter]
+    public RenderFragment? NavContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? HeaderContent { get; set; } // New Slot
+
+    [Parameter]
+    public RenderFragment? FooterContent { get; set; } // New Slot
+}

@@ -1,0 +1,194 @@
+@inject NavigationManager Nav
+
+<div class="wrapper">
+
+    <div class="tabs_wrap">
+        <ul>
+            <li class="@Link1Css"><a href="@Link1Url">Home</a></li>
+            <li class="@Link2Css"><a href="@Link2Url">Work Sheets</a></li>
+            <li class="@Link3Css"><a href="@Link3Url">Charter Worksheets</a></li>
+            <li class="@Link4Css"><a href="@Link4Url">Narratives</a></li>
+            <li class="@Link5Css"><a href="@Link5Url">Reports</a></li>
+        </ul>
+    </div>
+</div>
+
+@code {
+    private const string A = "active";   
+
+    string Link1Css = string.Empty; 
+    string Link2Css = string.Empty;
+    string Link3Css = string.Empty;
+    string Link4Css = string.Empty;
+    string Link5Css = string.Empty;
+
+    string Link1Url = string.Empty;
+    string Link2Url = string.Empty;
+    string Link3Url = string.Empty;
+    string Link4Url = string.Empty;
+    string Link5Url = string.Empty;
+
+    private string _Fund = string.Empty;
+
+    [Parameter]
+    public string? BaseRoute { get; set; }
+
+    [Parameter]
+    public int HighlightLinkNbr { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? Fund { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Link1Url = $"{BaseRoute}/budget-portal";
+        Link2Url = $"{BaseRoute}/budget-worksheets/city-funds";
+        Link3Url = $"{BaseRoute}/budget-worksheets/charter-funds";
+        Link4Url = $"{BaseRoute}/budget-narratives";
+        Link5Url = $"{BaseRoute}/budget-reports";
+
+        _Fund = Fund;
+
+        Nav.LocationChanged += HandleLocationChanged;
+
+        SetClasses();
+
+        base.OnInitialized();
+    }
+
+    void HandleLocationChanged(object sender, LocationChangedEventArgs e)
+    {
+        SetClasses();        
+    }
+
+    private void SetClasses()
+    {
+        if(HighlightLinkNbr==0)
+        {
+            Link1Css = string.Empty;
+            Link2Css = string.Empty;
+            Link3Css = string.Empty;
+            Link4Css = string.Empty;
+            Link5Css = string.Empty;
+        }
+        else if(HighlightLinkNbr==1)
+        {
+            Link1Css = A;
+            Link2Css = string.Empty;
+            Link3Css = string.Empty;
+            Link4Css = string.Empty;
+            Link5Css = string.Empty;
+            return;
+        }
+        else if(HighlightLinkNbr==2)
+        {
+            Link1Css = string.Empty;
+            Link2Css = A;
+            Link3Css = string.Empty;
+            Link4Css = string.Empty;
+            Link5Css = string.Empty;
+            return;
+        }
+        else if(HighlightLinkNbr==3)
+        {
+            Link1Css = string.Empty;
+            Link2Css = string.Empty;
+            Link3Css = A;
+            Link4Css = string.Empty;
+            Link5Css = string.Empty;
+            return;
+        }
+        else if(HighlightLinkNbr==4)
+        {
+            Link1Css = string.Empty;
+            Link2Css = string.Empty;
+            Link3Css = string.Empty;
+            Link4Css = A;
+            Link5Css = string.Empty;
+            return;
+        }
+        else if(HighlightLinkNbr==5)
+        {
+            Link1Css = string.Empty;
+            Link2Css = string.Empty;
+            Link3Css = string.Empty;
+            Link4Css = string.Empty;
+            Link5Css = A;
+            return;
+        }
+
+        string Q = Nav.Uri;
+
+        if (Q.Contains("charter-funds"))
+        {
+            SetStuff("17");
+            return;
+        }     
+        
+        if (Q.Contains("city-funds"))
+        {
+            SetStuff("001");
+            return;
+        }
+
+        if (Q.Contains("?fund")){
+
+            var P2I = Q.IndexOf("?");
+
+            var Starter = P2I + 1;
+            var Ender = Q.Length - Starter;
+
+            var P2 = Q.Substring(Starter, Ender);
+
+            var kys = P2.Split("&");
+
+            for (int i = 0; i < kys.Length; i++)
+            {
+                var Pa = kys[i].Split("=");
+
+                if (Pa[0] == "fund")
+                {
+                    SetStuff(Pa[1]);
+                    return;
+                }               
+            }          
+        }
+
+        //Since we changed to the default route, if none of the above logic works set it to City.
+        SetStuff("001");
+    }
+
+    private void SetStuff(string fund)
+    {
+        if(string.IsNullOrEmpty(fund))
+        {
+            Link1Url = string.Empty;
+            Link2Url = string.Empty;
+            Link3Url = string.Empty;
+            Link4Url = string.Empty;
+            Link5Url = string.Empty;
+
+            return; 
+        }
+
+        if (fund.StartsWith("17"))
+        {
+            Link1Url = string.Empty;
+            Link2Url = string.Empty;
+            Link3Url = A;
+            Link4Url = string.Empty;
+            Link5Url = string.Empty;
+        }
+        else
+        {
+            Link1Url = string.Empty;
+            Link2Url = A;
+            Link3Url = string.Empty;
+            Link4Url = string.Empty;
+            Link5Url = string.Empty;
+        }
+
+        StateHasChanged();
+    }
+}
