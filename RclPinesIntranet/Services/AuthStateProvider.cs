@@ -57,11 +57,7 @@ namespace RclPinesIntranet.Services
                         Console.WriteLine("Refresh was not successful.");
                         NotifyUserLogout();
                         return Anonm;
-                    }
-                    else
-                    {
-                      
-                    }
+                    }                   
                 }
             }
 
@@ -72,6 +68,7 @@ namespace RclPinesIntranet.Services
             ClaimsIdentity identity = new ClaimsIdentity(AllClaimsExtracted, AuthType);
 
             return new AuthenticationState(new ClaimsPrincipal(identity));
+            ////return Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity)));
 
             ////Works with micrsoft auth
 

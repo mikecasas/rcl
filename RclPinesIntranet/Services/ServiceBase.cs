@@ -69,7 +69,7 @@ namespace RclPinesIntranet.Services
 
         public async Task<TResult> PostJsonAsync<TValue, TResult>(string uri, bool isFullUri, TValue value)
         {
-            string FullUri = "";
+            string FullUri = string.Empty;
 
             if (isFullUri)
             {

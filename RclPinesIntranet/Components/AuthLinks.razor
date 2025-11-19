@@ -1,0 +1,22 @@
+﻿<AuthorizeView>
+    <Authorized>
+        <div class="d-flex">
+            <p class="lead">User @context.User.Identity.Name</p>                      
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="d-flex">
+            <p class="lead">Unauthenticated</p>
+            <a href="Login/@TenantNbr.ToString()?Ep=@LoginEndpoint" class="btn btn-primary"><i class="bi bi-unlock-fill"></i> Authenticate</a>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code {
+
+    [Parameter]
+    public int TenantNbr { get; set; }
+    [Parameter]
+    public string? LoginEndpoint { get; set; }
+}  

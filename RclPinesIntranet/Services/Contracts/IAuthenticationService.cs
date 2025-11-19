@@ -5,10 +5,14 @@ namespace RclPinesIntranet.Services.Contracts
 {
     public interface IAuthenticationService
     {
-        Task<LoginResult> Login(int tenantNbr);
-
-        Task<LoginResult> FakeLogin(string secretKey);
-
+        /// <summary>
+        /// Method to login a user  
+        /// </summary>
+        /// <param name="tenantNbr"></param>
+        /// <param name="loginEndpoint">The full url of the endpoint</param>
+        /// <returns></returns>
+        Task<LoginResult> Login(int tenantNbr, string loginEndpoint);
+       
         Task Logout();
     }
 }

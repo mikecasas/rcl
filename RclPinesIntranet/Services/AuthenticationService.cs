@@ -20,29 +20,19 @@ namespace RclPinesIntranet.Services
             _LocalStorage = localStorage;
             _Config = config;
             _TokenService = tokenService;
-        }
+        }       
 
-        public async Task<LoginResult> FakeLogin(string secretKey)
+        public async Task<LoginResult> Login(int tenantNbr, string loginEndpoint)
         {
-            var Fk = new FakeTenantRequest { SecretKey = _Config.LocalAuthSecret };
-            var loginResult = await PostJsonAsync<FakeTenantRequest, LoginResult>(_Config.LocalAuthUrl, true, Fk);
+            var TR = new TenantRequest { TenantNbr = tenantNbr };
 
-            if (loginResult == null || loginResult.IsSuccess == false)
+            var LR = await PostJsonAsync<TenantRequest, LoginResult>(loginEndpoint, isFullUri:true, TR);
+
+            if (LR is null || LR.IsSuccess == false)
             {
                 return new LoginResult { IsSuccess = false };
             }
-
-            if (loginResult == null || loginResult.IsSuccess == false)
-            {
-                return new LoginResult { IsSuccess = false };
-            }
-
-            return await AssignToken(loginResult);
-        }
-
-        public Task<LoginResult> Login(int tenantNbr)
-        {
-            throw new NotImplementedException();
+            return await AssignToken(LR);
         }
 
         public async Task Logout()
@@ -74,32 +64,11 @@ namespace RclPinesIntranet.Services
             {
                 return new LoginResult { IsSuccess = false };
             }
-        }
-
-        private TenantRequest GetTenantRequest(int tenantNbr)
-        {
-            var Request = new TenantRequest();
-
-            if (_Config.UseLocalAuth)
-            {
-                Request.TenantNbr = _Config.FakeTenantNbr;
-            }
-            else
-            {
-                Request.TenantNbr = tenantNbr;
-            }
-
-            return Request;
-        }
+        }      
 
         private class TenantRequest
         {
             public int TenantNbr { get; set; }
-        }
-
-        private class FakeTenantRequest
-        {
-            public string SecretKey { get; set; }
-        }
+        }        
     }
 }

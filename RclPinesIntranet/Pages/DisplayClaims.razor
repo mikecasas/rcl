@@ -1,0 +1,66 @@
+@page "/display-claims"
+
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ITokenService TokenSvc
+
+@attribute [Authorize]
+
+<h3>User Information</h3>
+
+<button @onclick="GetClaimsPrincipalData" class="rz-button rz-button-md rz-variant-filled rz-primary rz-shade-default mt-3 mb-5">
+    <span class="bi bi-person" style="font-size: 1.1rem;">Get User Information</span>
+</button>
+
+<p>@AuthMessage</p>
+
+@if (claims.Count() > 0)
+{
+    <ul>
+        @foreach (var claim in claims)
+        {
+            <li>@claim.Type: @claim.Value</li>
+        }
+    </ul>
+}
+
+
+@if (DisplayAccessToken)
+{
+    <div style="width:1200px;overflow:auto">
+        <pre>@AccessTokenString</pre>
+    </div>
+}
+
+@code {
+
+    private string? AccessTokenString = string.Empty;
+    private string? AuthMessage;
+    private IEnumerable<Claim> claims = Enumerable.Empty<Claim>();
+
+    [Parameter]
+    public bool DisplayAccessToken { get; set; }
+
+    private async Task GetClaimsPrincipalData()
+    {    
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            AuthMessage = $"User {user.Identity.Name} is authenticated.";
+            claims = user.Claims;
+
+            AccessTokenString = await TokenSvc.GetTokenAsync();
+
+            // surnameMessage = 
+            //     $"Surname: {user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value}";
+        }
+        else
+        {
+            AuthMessage = "The user is NOT authenticated.";
+        }
+    }
+}

@@ -8,10 +8,15 @@
     </div>
 
     <main>
-        <div class="top-row px-4">
-            @* Slot for custom header/utility content *@
-            @HeaderContent
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+
+          <div class="d-flex bd-highlight top-row">
+            <div class="p-2 flex-grow-1 bd-highlight">
+                @HeaderContent
+            </div>
+
+            <div class="p-2 bd-highlight">
+                @AuthorizationSection
+            </div>
         </div>
 
         <article class="content px-4">
@@ -34,6 +39,8 @@
 
     [Parameter]
     public RenderFragment? HeaderContent { get; set; } // New Slot
+    [Parameter]
+    public RenderFragment? AuthorizationSection { get; set; } // New Slot
 
     [Parameter]
     public RenderFragment? FooterContent { get; set; } // New Slot

@@ -2,6 +2,22 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Hello, Project!</h1>
 
-Welcome to your new app.
+Welcome to your new app. There is no auth on this page!
+
+<RclPinesIntranet.Components.LoginWidget>
+
+</RclPinesIntranet.Components.LoginWidget>
+
+
+<h3>Main Auth App</h3>
+
+<AuthorizeView>
+    <Authorized>
+        <p class="text-success">Parent project sees: User is logged in.</p>
+    </Authorized>
+    <NotAuthorized>
+        <p class="text-danger">Parent project sees: User is NOT logged in.</p>
+    </NotAuthorized>
+</AuthorizeView>

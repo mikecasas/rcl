@@ -1,6 +1,8 @@
-﻿using Blazored.LocalStorage;
-using Microsoft.Extensions.DependencyInjection;
+﻿using AuthRCL;
+using AuthRCL.Services;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Extensions.DependencyInjection;
 using Radzen;
 using RclPinesIntranet.Config;
 using RclPinesIntranet.Services;
@@ -21,11 +23,16 @@ namespace RclPinesIntranet
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshAuthenticationService, RefreshAuthenticationService>();
 
-            services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
+            //services.AddScoped<IAuthenticationService, AuthenticationService>();
+            //services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
+
+
+            services.AddScoped<RclAuthService>();
+            services.AddScoped<AuthenticationStateProvider, RclAuthStateProvider>();
 
             services.AddAuthorizationCore();
 
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
+
 
             services.AddRadzenComponents();         
 

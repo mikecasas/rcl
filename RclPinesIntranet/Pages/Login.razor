@@ -1,11 +1,106 @@
-﻿@page "/login"
+﻿@page "/login/{tenantNbr}"
+@inject NavigationManager Nav
 
-@layout SlimlineLoginLayout
+<PageTitle>Login</PageTitle>
 
-<h3>Login</h3>
+<p class="lead">@Message</p>
 
-<h3>Pines Intranet Login</h3>
+<h3>Pembroke Pines Intranet Authentication</h3>
+
+<button @onclick="OnValid" type="button" disabled="@IsDisabled" class="btn btn-primary mt-3 mb-5">
+    <span class="bi bi-person" style="font-size: 1.2rem;"> Login</span>
+</button>
+
+@if (@IsDisabled)
+{
+    <h4 class="mb-5">Authenticating......</h4>
+    <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" Style="margin-bottom: 20px" />
+}
 
 @code {
 
+    [Inject]
+    public IServiceBase? ServiceBase { get; set; }
+
+    [Inject]
+    public IServiceBaseConfig? ServiceBaseConfig { get; set; }
+
+    [Inject]
+    public IAuthenticationService? AuthenticationService { get; set; }
+
+    LoginModel user = new LoginModel();
+    string Message = string.Empty;
+    bool IsDisabled = false;
+    private int CurrentCount = 0;
+    private int TenNbr;  
+    string Ep = string.Empty;
+
+    [Parameter]
+    public string? TenantNbr { get; set; }      
+
+    [Parameter]
+    public string? RedirectedPage { get; set; }
+
+    [Parameter]
+    public string? ReturnSuccessValue { get; set; }
+
+    protected override void OnInitialized()
+    {        
+        Ep = Nav.QueryString("Ep");
+
+        bool success = int.TryParse(TenantNbr, out int number);
+        if (success)
+        {
+            TenNbr = number;
+        }
+        else
+        {
+            TenNbr = -1;
+        }
+    }    
+
+    private async Task OnValid()
+    {
+        IsDisabled = true;
+        var rslt = await AuthenticationService.Login(TenNbr, Ep);
+        GotoPage(rslt);
+    }
+
+    private void GotoPage(LoginResult l)
+    {
+        if (l.IsSuccess)
+        {
+            if (string.IsNullOrEmpty(l.DefaultPage))
+            {
+                Nav.NavigateTo(Nav.BaseUri);
+            }
+            else
+            {
+                if (l.DefaultPage == ReturnSuccessValue)
+                {
+                    Console.WriteLine(Nav.BaseUri);
+                    Console.WriteLine(l);
+
+                    Nav.NavigateTo(Nav.BaseUri + RedirectedPage);
+                }
+                else
+                {
+                    Nav.NavigateTo(Nav.BaseUri);
+                }
+            }
+        }
+        {
+            CurrentCount++;
+            Message = $"Invalid Logon Attempt. Attempt {CurrentCount}";
+            IsDisabled = false;
+        }
+    }
 }
+
+
+@* <h1>Login Page from RCL</h1>
+
+
+<h6>Because we placed a page directive, the hosting appilication can route to here.</h6>
+
+<h6>**App.razor needs to have the Additional Assemblies property like the comments below</h6> *@

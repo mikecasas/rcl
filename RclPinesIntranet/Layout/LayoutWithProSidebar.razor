@@ -1,0 +1,34 @@
+﻿@using Microsoft.JSInterop
+@using RclPinesIntranet.Layout.Sidebar
+
+@inherits LayoutComponentBase
+@inject IJSRuntime JS
+
+<div class="layout has-sidebar fixed-sidebar fixed-header">
+
+    <SidebarComponent @ref="sideBarComponent"/>
+
+    <div @onclick="@(e => sideBarComponent?.MouseClickedInOverlay())" id="overlay" class="overlay"></div>
+    <div class="layout">
+
+        <main class="content" @onclick="@(e => sideBarComponent?.MouseClickedInContent())">
+            <div>
+                <a @onclick="(e => sideBarComponent?.BtnToggleClicked())" id="btn-toggle" href="#" class="sidebar-toggler break-point-sm">
+                    <i class="ri-menu-line ri-xl"></i>
+                </a>
+            </div>
+           
+            <div class="main-content">
+                @Body
+            </div>          
+
+        </main>
+
+        <div class="overlay"></div>
+
+    </div>
+</div>
+
+@code {
+    SidebarComponent? sideBarComponent;
+}
