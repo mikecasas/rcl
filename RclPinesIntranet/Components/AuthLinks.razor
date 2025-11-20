@@ -1,7 +1,8 @@
 ﻿<AuthorizeView>
     <Authorized>
         <div class="d-flex">
-            <p class="lead">User @context.User.Identity.Name</p>                      
+            <p class="lead">User @context.User.Identity.Name</p>  
+            <a href="Logout" class="btn btn-primary"> <span class="bi-lock" style="font-size: 1.15rem;"></span> Logout</a>
         </div>
     </Authorized>
     <NotAuthorized>

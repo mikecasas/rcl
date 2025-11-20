@@ -23,16 +23,14 @@ namespace RclPinesIntranet
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshAuthenticationService, RefreshAuthenticationService>();
 
-            //services.AddScoped<IAuthenticationService, AuthenticationService>();
-            //services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 
-            services.AddScoped<RclAuthService>();
-            services.AddScoped<AuthenticationStateProvider, RclAuthStateProvider>();
+            //services.AddScoped<RclAuthService>();
+            //services.AddScoped<AuthenticationStateProvider, RclAuthStateProvider>();
 
             services.AddAuthorizationCore();
-
-
 
             services.AddRadzenComponents();         
 

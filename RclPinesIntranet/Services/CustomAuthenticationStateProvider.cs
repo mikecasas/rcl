@@ -5,7 +5,7 @@ using RclPinesIntranet.Services.Contracts;
 
 namespace RclPinesIntranet.Services
 {
-    public class AuthStateProvider : AuthenticationStateProvider
+    public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     {
         private readonly IRefreshAuthenticationService _AuthService;
         private ITokenService _TokenService;
@@ -13,7 +13,7 @@ namespace RclPinesIntranet.Services
 
         private const string AuthType = "jwtAuthType";
         	
-		public AuthStateProvider(HttpClient httpClient, ITokenService tokenService, IRefreshAuthenticationService authService)
+		public CustomAuthenticationStateProvider(HttpClient httpClient, ITokenService tokenService, IRefreshAuthenticationService authService)
         {
             _HttpClient = httpClient;
             _TokenService = tokenService;
@@ -68,6 +68,8 @@ namespace RclPinesIntranet.Services
             ClaimsIdentity identity = new ClaimsIdentity(AllClaimsExtracted, AuthType);
 
             return new AuthenticationState(new ClaimsPrincipal(identity));
+
+
             ////return Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity)));
 
             ////Works with micrsoft auth
@@ -93,19 +95,21 @@ namespace RclPinesIntranet.Services
         }
 
         public void NotifyUserLogout()
-        {
-            //Need to destroy the token in local storage!!!!!
-
-            //var authState = Task.FromResult(_anonymous);
-            //NotifyAuthenticationStateChanged(authState);
-
-            //destroy the tokens
+        {         
+            //Destroy the Tokens
             _TokenService.DeleteLocalToken();
             _TokenService.DeleteLocalRefreshToken();
 
 			ClaimsIdentity identity = new ClaimsIdentity();
-            var AS = Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity)));
-            NotifyAuthenticationStateChanged(AS);
+            var AuthState = Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity)));
+            NotifyAuthenticationStateChanged(AuthState);
         }
     }
 }
+
+
+
+//Need to destroy the token in local storage!!!!!
+
+//var authState = Task.FromResult(_anonymous);
+//NotifyAuthenticationStateChanged(authState);

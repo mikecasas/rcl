@@ -62,7 +62,7 @@
     private async Task OnValid()
     {
         IsDisabled = true;
-        var rslt = await AuthenticationService.Login(TenNbr, Ep);
+        var rslt = await AuthenticationService.LoginAsync(TenNbr, Ep);
         GotoPage(rslt);
     }
 

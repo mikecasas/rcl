@@ -4,21 +4,14 @@
 <RclPinesIntranet.Layout.PinesIntranet.MainLayout>
     <NavContent>
         <SiteSpecificNavMenu />
-
-        <RclPinesIntranet.Components.AuthLinks TenantNbr="1" LoginEndpoint="https://tws.ppines.com/saas-admin/windows-auth/login"></RclPinesIntranet.Components.AuthLinks> 
-
-
-
-
- @*        <RclPinesIntranet.Components.AuthLinks TenantNbr="1" LoginEndpoint="https://localhost:7290/windows-auth/login"></RclPinesIntranet.Components.AuthLinks> *@
-
-
     </NavContent>
+
+    <AuthorizationSection>
+        <RclPinesIntranet.Components.AuthLinks TenantNbr="1" LoginEndpoint="https://tws.ppines.com/saas-admin/windows-auth/login"></RclPinesIntranet.Components.AuthLinks>
+    </AuthorizationSection>
+
     <HeaderContent>
-
-        <RclPinesIntranet.Layout.PinesIntranet.BudgetPortalSites BaseRoute="https://localhost:9999" HighlightLinkNbr="1">
-
-        </RclPinesIntranet.Layout.PinesIntranet.BudgetPortalSites>
+        <RclPinesIntranet.Layout.PinesIntranet.BudgetPortalSites BaseRoute="https://localhost:9999" HighlightLinkNbr="1" />
 
     </HeaderContent>
     <FooterContent>

@@ -11,8 +11,8 @@ namespace RclPinesIntranet.Services.Contracts
         /// <param name="tenantNbr"></param>
         /// <param name="loginEndpoint">The full url of the endpoint</param>
         /// <returns></returns>
-        Task<LoginResult> Login(int tenantNbr, string loginEndpoint);
+        Task<LoginResult> LoginAsync(int tenantNbr, string loginEndpoint);
        
-        Task Logout();
+        Task LogoutAsync();
     }
 }

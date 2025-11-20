@@ -1,54 +1,58 @@
 ﻿using Blazored.LocalStorage;
+using RclPinesIntranet.Config;
 using RclPinesIntranet.Services.Contracts;
 
 namespace RclPinesIntranet.Services
 {
     public class TokenService : ITokenService
     {
-        private readonly ILocalStorageService _localStorage;
-
-        //Todo pull this from a config file
-        public const string LocalStorageTokenName = "saas_admin_jwt";
-        public const string LocalStorageRefreshTokenName = "saas_admin_refresh";
+        private readonly ILocalStorageService _LocalStorage;
+        private readonly IServiceBaseConfig _Config;
 
 
-        public TokenService(ILocalStorageService localStorage)
+        public TokenService(ILocalStorageService localStorage, IServiceBaseConfig config)
         {
-            _localStorage = localStorage;
+            _LocalStorage = localStorage;
+            _Config = config;
         }
 
         public async Task<string> GetTokenAsync()
         {
-            return await GetLocalToken(LocalStorageTokenName);
+            return await GetLocalToken(_Config.LocalStorageTokenName);
         }
 
         public async Task<string> GetRefreshTokenAsync()
         {
-            return await GetLocalToken(LocalStorageRefreshTokenName);
+            return await GetLocalToken(_Config.LocalStorageRefreshTokenName);
         }
 
         private async Task<string> GetLocalToken(string tokenName)
         {
-            string tok = await _localStorage.GetItemAsync<string>(tokenName);
+            string tok = String.Empty;
 
-            if (string.IsNullOrWhiteSpace(tok))
-                return null;
+            try
+            {
+                tok = await _LocalStorage.GetItemAsync<string>(tokenName);
+            }catch(Exception ex)
+            {
+                string s = ex.Message;               
+            }
 
             return tok;
         }
 
         public async Task DeleteLocalToken()
         {
-            await DeleteToken(LocalStorageTokenName);
+            await DeleteToken(_Config.LocalStorageTokenName);
         }
 
         public async Task DeleteLocalRefreshToken()
         {
-            await DeleteToken(LocalStorageRefreshTokenName);
+            await DeleteToken(_Config.LocalStorageRefreshTokenName);
         }
         private async Task DeleteToken(string tokenName)
         {
-            await _localStorage.RemoveItemAsync(tokenName);
+            await _LocalStorage.RemoveItemAsync(tokenName);
         }
         public async Task<bool> IsToken()
         {
