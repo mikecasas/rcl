@@ -220,17 +220,12 @@ namespace RclPinesIntranet.Services
 
         private string FullUrl(string partialUrl, ConfigServiceSettings configSvc)
         {
-            if (partialUrl == configSvc.LoginEndpoint)
-            {
-                return $"{configSvc.ApiLoginUrl}";
-            }
-
-            string? BaseUrl = configSvc.ApiBaseUrl;
+           string? BaseUrl = configSvc.ApiBaseUrl;
 
             //Any login, send to Prod endpoint
             if (partialUrl.Contains("login"))
             {
-                BaseUrl = configSvc.ApiLoginUrl;
+                return configSvc.LoginEndpoint;
             }
 
             return $"{BaseUrl}/{partialUrl}";

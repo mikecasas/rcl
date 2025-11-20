@@ -6,7 +6,6 @@ namespace RclPinesIntranet.Services
     public abstract class ConfigServiceSettings
     {
         public string? ApiBaseUrl { get; protected set; }
-        public string? ApiLoginUrl { get; protected set; }
         public string? ApplicationName { get; protected set; }
         public string? LoginUser { get; protected set; }
         public string? LoginPassword { get; protected set; }
@@ -107,7 +106,6 @@ namespace RclPinesIntranet.Services
         {
             ApplicationName = ConfigParser.GetValueFromDefaultConfig(jsonString, "ApplicationName");
             ApiBaseUrl = ConfigParser.GetValueFromDefaultConfig(jsonString, "ApiBaseUrl");
-            ApiLoginUrl = ConfigParser.GetValueFromDefaultConfig(jsonString, "ApiLoginUrl");
             LoginUser = ConfigParser.GetValueFromDefaultConfig(jsonString, "LoginUser");
             LoginPassword = ConfigParser.GetValueFromDefaultConfig(jsonString, "LoginPassword");
             LoginEndpoint = ConfigParser.GetValueFromDefaultConfig(jsonString, "LoginEndpoint");
