@@ -1,6 +1,4 @@
-﻿using AuthRCL;
-using AuthRCL.Services;
-using Blazored.LocalStorage;
+﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Radzen;
@@ -13,9 +11,7 @@ namespace RclPinesIntranet
     public static class ServiceCollectionExtensions
     {
         public static void AddLibraryServices(this IServiceCollection services)
-        {
-            //services.AddSingleton<WeatherForecastService>();                 
-
+        {           
             services.AddBlazoredLocalStorage();
 
             services.AddScoped<IServiceBaseConfig, DefaultServiceBaseConfig>();
@@ -26,10 +22,6 @@ namespace RclPinesIntranet
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
-
-            //services.AddScoped<RclAuthService>();
-            //services.AddScoped<AuthenticationStateProvider, RclAuthStateProvider>();
-
             services.AddAuthorizationCore();
 
             services.AddRadzenComponents();         
@@ -37,7 +29,6 @@ namespace RclPinesIntranet
             //Utility classes for code reuse to inject into Blazor pages
             services.AddScoped<Notifications>();
             services.AddScoped<ConfigService>();
-
         }
     }
 }
