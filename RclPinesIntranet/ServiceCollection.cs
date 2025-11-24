@@ -10,7 +10,8 @@ namespace RclPinesIntranet
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddLibraryServices(this IServiceCollection services, string loginEndpoint, string apiBaseUrl)
+        public static void AddLibraryServices(this IServiceCollection services, string loginEndpoint, string apiBaseUrl
+            ,AuthenticationStateProvider authenticationStateProvider, IAuthenticationService authenticationService)
         {           
             services.AddBlazoredLocalStorage();
 
@@ -23,8 +24,33 @@ namespace RclPinesIntranet
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshAuthenticationService, RefreshAuthenticationService>();
 
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
-            services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+
+            //Overide the default authentication service with the one provided by the caller
+            if(authenticationService is not null)
+            {
+                services.AddScoped<IAuthenticationService>(sp => authenticationService);
+            }
+            else
+            {
+                services.AddScoped<IAuthenticationService, AuthenticationService>();
+            }
+
+
+            //Overide the default authentication service with the one provided by the caller
+            if (authenticationService is not null)
+            {
+                services.AddScoped<AuthenticationStateProvider>(sp => authenticationStateProvider);
+            }
+            else
+            {
+                services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+            }
+
+
+            //services.AddScoped<IAuthenticationService, AuthenticationService>();
+            //services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+
+
 
             services.AddAuthorizationCore();
 
