@@ -33,7 +33,6 @@
     bool IsDisabled = false;
     private int CurrentCount = 0;
     private int TenNbr;  
-    string Ep = string.Empty;
 
     [Parameter]
     public string? TenantNbr { get; set; }      
@@ -45,9 +44,7 @@
     public string? ReturnSuccessValue { get; set; }
 
     protected override void OnInitialized()
-    {        
-        Ep = Nav.QueryString("Ep");
-
+    {
         bool success = int.TryParse(TenantNbr, out int number);
         if (success)
         {
@@ -62,7 +59,7 @@
     private async Task OnValid()
     {
         IsDisabled = true;
-        var rslt = await AuthenticationService.LoginAsync(TenNbr, Ep);
+        var rslt = await AuthenticationService.LoginAsync(TenNbr);
         GotoPage(rslt);
     }
 

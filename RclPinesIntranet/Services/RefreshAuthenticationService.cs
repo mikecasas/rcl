@@ -9,7 +9,7 @@ namespace RclPinesIntranet.Services
     {
         private ITokenService _TokenService;
 
-        public RefreshAuthenticationService(HttpClient httpClient, ITokenService tokenService, ConfigService configService) : base(httpClient, tokenService, configService)
+        public RefreshAuthenticationService(HttpClient httpClient, ITokenService tokenService, UrlLocations urlLocations) : base(httpClient, tokenService, urlLocations)
         {
             _TokenService = tokenService;
         }

@@ -12,21 +12,23 @@ namespace RclPinesIntranet.Services
         private readonly ILocalStorageService _LocalStorage;
         private readonly AuthenticationStateProvider _AuthenticationStateProvider;
         private ITokenService _TokenService;
+        private readonly UrlLocations _UrlLocatations;
 
         public AuthenticationService(HttpClient client, IServiceBaseConfig config, ILocalStorageService localStorage, AuthenticationStateProvider authenticationStateProvider,
-            ITokenService tokenService, ConfigService configService) : base(client, tokenService, configService)
+            ITokenService tokenService, UrlLocations urlLocations) : base(client, tokenService, urlLocations)
         {
             _AuthenticationStateProvider = authenticationStateProvider;
             _LocalStorage = localStorage;
             _Config = config;
             _TokenService = tokenService;
+            _UrlLocatations = urlLocations;
         }       
 
-        public async Task<LoginResult> LoginAsync(int tenantNbr, string loginEndpoint)
+        public async Task<LoginResult> LoginAsync(int tenantNbr)
         {
             var TR = new TenantRequest { TenantNbr = tenantNbr };
 
-            var LR = await PostJsonAsync<TenantRequest, LoginResult>(loginEndpoint, isFullUri: true, TR);
+            var LR = await PostJsonAsync<TenantRequest, LoginResult>(_UrlLocatations.LoginEndpoint, isFullUri: true, TR);
 
             if (LR is null || LR.IsSuccess == false)
             {

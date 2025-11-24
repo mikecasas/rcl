@@ -1,15 +1,14 @@
 ﻿using Blazored.LocalStorage;
 
-
 namespace RclPinesIntranet.Services
 {
     public abstract class ConfigServiceSettings
     {
-        public string? ApiBaseUrl { get; protected set; }
+        //public string? ApiBaseUrl { get; protected set; }
         public string? ApplicationName { get; protected set; }
         public string? LoginUser { get; protected set; }
         public string? LoginPassword { get; protected set; }
-        public string? LoginEndpoint { get; protected set; }
+        //public string? LoginEndpoint { get; protected set; }
 
         public string? ConfigEndpoint { get; protected set; }
     }
@@ -104,11 +103,14 @@ namespace RclPinesIntranet.Services
 
         private void ParseTheItems(string jsonString)
         {
-            ApplicationName = ConfigParser.GetValueFromDefaultConfig(jsonString, "ApplicationName");
-            ApiBaseUrl = ConfigParser.GetValueFromDefaultConfig(jsonString, "ApiBaseUrl");
+            ApplicationName = ConfigParser.GetValueFromDefaultConfig(jsonString, "ApplicationName");          
             LoginUser = ConfigParser.GetValueFromDefaultConfig(jsonString, "LoginUser");
             LoginPassword = ConfigParser.GetValueFromDefaultConfig(jsonString, "LoginPassword");
-            LoginEndpoint = ConfigParser.GetValueFromDefaultConfig(jsonString, "LoginEndpoint");
+
+
+            ////Doesn't really work for the Budget Intranet apps
+            //ApiBaseUrl = ConfigParser.GetValueFromDefaultConfig(jsonString, "ApiBaseUrl");
+            //LoginEndpoint = ConfigParser.GetValueFromDefaultConfig(jsonString, "LoginEndpoint");
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using Blazored.LocalStorage;
-using RclPinesIntranet.Config;
-using RclPinesIntranet.Services.Contracts;
+﻿using RclPinesIntranet.Services.Contracts;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -11,13 +9,13 @@ namespace RclPinesIntranet.Services
     {
         private readonly HttpClient _HttpClient;
         private ITokenService _TokenService;
-        private readonly ConfigService _ConfigService;
+        private readonly UrlLocations _UrlLocations;
 
-        public ServiceBase(HttpClient httpClient, ITokenService tokenService, ConfigService configService)
+        public ServiceBase(HttpClient httpClient, ITokenService tokenService, UrlLocations urlLocations)
         {
             _HttpClient = httpClient;
-            _TokenService = tokenService;
-            _ConfigService = configService;
+            _TokenService = tokenService;         
+            _UrlLocations = urlLocations;
         }
 
         #region Get Requests
@@ -37,7 +35,7 @@ namespace RclPinesIntranet.Services
             }
             else
             {
-                FullUri = FullUrl(uri, _ConfigService);
+                FullUri = FullUrl(uri);
             }
 
             var Tok = await _TokenService.GetTokenAsync();
@@ -77,7 +75,7 @@ namespace RclPinesIntranet.Services
             }
             else
             {
-                FullUri = FullUrl(uri, _ConfigService);
+                FullUri = FullUrl(uri);
             }
 
             var Tok = await _TokenService.GetTokenAsync();
@@ -110,10 +108,8 @@ namespace RclPinesIntranet.Services
         }
 
         public async Task<TResult> PostJsonWithHeadersAsync<TValue, TResult>(string uri, bool isFullUri, TValue value, Dictionary<string, string> headers)
-        {
-            await _ConfigService.LoadConfigAsync();
-
-            string FullUri = GetUrl(uri, isFullUri, _ConfigService);
+        {          
+            string FullUri = GetUrl(uri, isFullUri);
 
             var H = await GetHttpClientWithHeadersAsync(headers);
 
@@ -143,7 +139,7 @@ namespace RclPinesIntranet.Services
             }
             else
             {
-                FullUri = FullUrl(uri, _ConfigService);
+                FullUri = FullUrl(uri);
             }
 
             var Tok = await _TokenService.GetTokenAsync();
@@ -177,7 +173,7 @@ namespace RclPinesIntranet.Services
             return H;
         }
 
-        private string GetUrl(string uri, bool isFullUri, ConfigServiceSettings configSvc)
+        private string GetUrl(string uri, bool isFullUri)
         {
             string FullUri = string.Empty;
 
@@ -187,7 +183,7 @@ namespace RclPinesIntranet.Services
             }
             else
             {
-                FullUri = FullUrl(uri, configSvc);
+                FullUri = FullUrl(uri);
             }
 
             return FullUri;
@@ -218,14 +214,14 @@ namespace RclPinesIntranet.Services
             return _HttpClient;
         }
 
-        private string FullUrl(string partialUrl, ConfigServiceSettings configSvc)
+        private string FullUrl(string partialUrl)
         {
-           string? BaseUrl = configSvc.ApiBaseUrl;
+           string? BaseUrl = _UrlLocations.ApiUrlBase;
 
             //Any login, send to Prod endpoint
             if (partialUrl.Contains("login"))
             {
-                return configSvc.LoginEndpoint;
+                return _UrlLocations.LoginEndpoint;
             }
 
             return $"{BaseUrl}/{partialUrl}";

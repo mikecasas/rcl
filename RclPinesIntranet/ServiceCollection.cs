@@ -10,9 +10,13 @@ namespace RclPinesIntranet
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddLibraryServices(this IServiceCollection services)
+        public static void AddLibraryServices(this IServiceCollection services, string loginEndpoint, string apiBaseUrl)
         {           
             services.AddBlazoredLocalStorage();
+
+            services.AddSingleton(new UrlLocations(loginEndpoint, apiBaseUrl));
+
+            services.AddScoped<IServiceBase, ServiceBase>();
 
             services.AddScoped<IServiceBaseConfig, DefaultServiceBaseConfig>();
             services.AddScoped<IServiceBase, ServiceBase>();
