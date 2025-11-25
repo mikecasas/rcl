@@ -14,6 +14,7 @@
 </div>
 
 @code {
+
     private const string A = "active";   
 
     string Link1Css = string.Empty; 
@@ -42,11 +43,13 @@
 
     protected override void OnInitialized()
     {
-        Link1Url = $"{BaseRoute}/budget-portal";
-        Link2Url = $"{BaseRoute}/budget-worksheets/city-funds";
-        Link3Url = $"{BaseRoute}/budget-worksheets/charter-funds";
-        Link4Url = $"{BaseRoute}/budget-narratives";
-        Link5Url = $"{BaseRoute}/budget-reports";
+        const string B = "/wc/budget-";
+
+        Link1Url = $"{BaseRoute}{B}portal";
+        Link2Url = $"{BaseRoute}{B}worksheets/city-funds";
+        Link3Url = $"{BaseRoute}{B}worksheets/charter-funds";
+        Link4Url = $"{BaseRoute}{B}narratives";
+        Link5Url = $"{BaseRoute}{B}reports";
 
         _Fund = Fund;
 

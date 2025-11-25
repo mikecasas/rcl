@@ -218,13 +218,19 @@ namespace RclPinesIntranet.Services
         {
            string? BaseUrl = _UrlLocations.ApiUrlBase;
 
-            //Any login, send to Prod endpoint
+            //Any login or refresh, send to Prod endpoint
             if (partialUrl.Contains("login"))
             {
                 return _UrlLocations.LoginEndpoint;
-            }
 
-            return $"{BaseUrl}/{partialUrl}";
+            }else if (partialUrl.Contains("refresh-endpoint"))
+            {
+                return $"{BaseUrl}/{partialUrl}";
+            }
+            else
+            {
+                return $"{BaseUrl}/{partialUrl}";
+            }              
         }
 
         private bool ValidateJsonContent(HttpContent content)

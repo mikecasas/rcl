@@ -8,7 +8,7 @@
     <RootNamespace>RclPinesIntranet</RootNamespace>
     <AssemblyName>RclPinesIntranet</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.18.2</Version>
+    <Version>0.18.4</Version>
     <Company>City of Pembroke Pines, Florida</Company>
     <Authors>Technology Services Department</Authors>
     <Description>Razor Class library</Description>

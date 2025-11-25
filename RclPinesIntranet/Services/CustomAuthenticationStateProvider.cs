@@ -52,7 +52,7 @@ namespace RclPinesIntranet.Services
 
                     var RespRefresh = await _AuthService.RefreshToken(Claim.Value);
 
-                    if (RespRefresh == null)
+                    if (RespRefresh is null)
                     {
                         Console.WriteLine("Refresh was not successful.");
                         NotifyUserLogout();
@@ -89,7 +89,6 @@ namespace RclPinesIntranet.Services
         {
             //var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token), AuthType));
             //var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
-            //NotifyAuthenticationStateChanged(authState);
 
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
@@ -106,10 +105,3 @@ namespace RclPinesIntranet.Services
         }
     }
 }
-
-
-
-//Need to destroy the token in local storage!!!!!
-
-//var authState = Task.FromResult(_anonymous);
-//NotifyAuthenticationStateChanged(authState);
