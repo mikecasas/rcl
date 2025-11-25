@@ -24,7 +24,6 @@ namespace RclPinesIntranet
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshAuthenticationService, RefreshAuthenticationService>();
 
-
             //Overide the default authentication service with the one provided by the caller
             if(authenticationService is not null)
             {
@@ -34,7 +33,6 @@ namespace RclPinesIntranet
             {
                 services.AddScoped<IAuthenticationService, AuthenticationService>();
             }
-
 
             //Overide the default authentication service with the one provided by the caller
             if (authenticationService is not null)
@@ -46,14 +44,7 @@ namespace RclPinesIntranet
                 services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
             }
 
-
-            //services.AddScoped<IAuthenticationService, AuthenticationService>();
-            //services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
-
-
-
             services.AddAuthorizationCore();
-
             services.AddRadzenComponents();         
 
             //Utility classes for code reuse to inject into Blazor pages
@@ -62,3 +53,11 @@ namespace RclPinesIntranet
         }
     }
 }
+
+
+
+
+
+
+//services.AddScoped<IAuthenticationService, AuthenticationService>();
+//services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
