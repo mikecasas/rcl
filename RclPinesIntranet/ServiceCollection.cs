@@ -22,8 +22,10 @@ namespace RclPinesIntranet
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshAuthenticationService, RefreshAuthenticationService>();
 
+            services.AddScoped<Helper>();
+
             //Overide the default authentication service with the one provided by the caller
-            if(authenticationService is not null)
+            if (authenticationService is not null)
             {
                 services.AddScoped<IAuthenticationService>(sp => authenticationService);
             }

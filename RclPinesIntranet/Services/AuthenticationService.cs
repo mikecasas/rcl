@@ -39,15 +39,9 @@ namespace RclPinesIntranet.Services
         }
 
         public async Task LogoutAsync()
-        {
-            //Delete the tokens
-            await _TokenService.DeleteLocalToken();
-            await _TokenService.DeleteLocalRefreshToken();
-
+        {          
             var AuthThing = ((CustomAuthenticationStateProvider)_AuthenticationStateProvider);
-            AuthThing.NotifyUserLogout();       
-                        
-            RemoveAuthTokenFromHttpHeader();
+            AuthThing.NotifyUserLogout();    
         }
 
         private async Task<LoginResult> AssignToken(LoginResult loginResult)

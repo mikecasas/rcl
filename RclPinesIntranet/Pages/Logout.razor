@@ -1,5 +1,6 @@
 @page "/logout"
-@inject NavigationManager nav
+
+@inject Helper H
 
 @inject IAuthenticationService AuthenticationService
 
@@ -8,7 +9,7 @@
 	protected override async Task OnInitializedAsync()
 	{
 		await AuthenticationService.LogoutAsync();
+        await H.CleanUpOnLogoutAsync();
 
-		//nav.NavigateTo(nav.BaseUri);
 	}
 }
