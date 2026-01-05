@@ -16,9 +16,7 @@ namespace RclPinesIntranet
             services.AddBlazoredLocalStorage();
 
             services.AddSingleton(new UrlLocations(loginEndpoint, apiBaseUrl));
-
-            services.AddScoped<IServiceBase, ServiceBase>();
-
+                
             services.AddScoped<IServiceBaseConfig, DefaultServiceBaseConfig>();
             services.AddScoped<IServiceBase, ServiceBase>();
             services.AddScoped<ITokenService, TokenService>();
@@ -53,11 +51,3 @@ namespace RclPinesIntranet
         }
     }
 }
-
-
-
-
-
-
-//services.AddScoped<IAuthenticationService, AuthenticationService>();
-//services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
