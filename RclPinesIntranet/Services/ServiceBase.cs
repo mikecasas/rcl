@@ -195,7 +195,7 @@ namespace RclPinesIntranet.Services
             //No token was passed in
             if (string.IsNullOrEmpty(token))
             {
-                Console.WriteLine($"There was no token passed in.");
+                Console.WriteLine($"There token passed in was null or empty.");
                 return _HttpClient;
             }
 

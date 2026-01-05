@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using Radzen.Blazor;
 using RclPinesIntranet.Config;
 using RclPinesIntranet.Services.Contracts;
 
@@ -18,12 +19,18 @@ namespace RclPinesIntranet.Services
 
         public async Task<string> GetTokenAsync()
         {
-            return await GetLocalToken(_Config.LocalStorageTokenName);
+            string TokName = _Config.LocalStorageTokenName;
+
+            Console.WriteLine($"Getting Token: {TokName}");
+            return await GetLocalToken(TokName);
         }
 
         public async Task<string> GetRefreshTokenAsync()
         {
-            return await GetLocalToken(_Config.LocalStorageRefreshTokenName);
+            string TokName = _Config.LocalStorageRefreshTokenName;  
+
+            Console.WriteLine($"Getting Refresh Token: {TokName}");
+            return await GetLocalToken(TokName);
         }
 
         private async Task<string> GetLocalToken(string tokenName)
@@ -31,11 +38,13 @@ namespace RclPinesIntranet.Services
             string tok = String.Empty;
 
             try
-            {
-                tok = await _LocalStorage.GetItemAsync<string>(tokenName);
+            {           
+               tok = await _LocalStorage.GetItemAsync<string>(tokenName);
+
             }catch(Exception ex)
             {
-                string s = ex.Message;               
+                string s = ex.Message;
+                Console.WriteLine($"Error: {s}");
             }
 
             return tok;
