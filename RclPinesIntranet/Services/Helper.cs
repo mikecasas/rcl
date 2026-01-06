@@ -6,11 +6,11 @@ using System.Text;
 
 namespace RclPinesIntranet.Services
 {
-    internal class Helper : ServiceBase
+    public class Helper : ServiceBase
     {
         private ITokenService _TokenService;
 
-        internal Helper(HttpClient client, ITokenService tokenService, UrlLocations urlLocations) : base(client, tokenService, urlLocations)
+        public Helper(HttpClient client, ITokenService tokenService, UrlLocations urlLocations) : base(client, tokenService, urlLocations)
         {
             _TokenService = tokenService;
 
