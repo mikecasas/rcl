@@ -3,6 +3,8 @@
 @using System.Security.Claims
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Authorization
+@using Tsd.Utils
+
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ITokenService TokenSvc
 
@@ -24,8 +26,13 @@
             <li>@claim.Type: @claim.Value</li>
         }
     </ul>
-}
 
+    <ul>
+        <li>Token Issued: @TokenIssuedAt</li>
+        <li>Token Expires: @TokenExpiresAt</li>
+        <li>Token Not Before: @TokenNotBefore</li>
+    </ul>
+}
 
 @if (DisplayAccessToken)
 {
@@ -40,6 +47,10 @@
     private string? AuthMessage;
     private IEnumerable<Claim> claims = Enumerable.Empty<Claim>();
 
+    private string? TokenIssuedAt = string.Empty;
+    private string? TokenExpiresAt = string.Empty;
+    private string? TokenNotBefore = string.Empty;
+
     [Parameter]
     public bool DisplayAccessToken { get; set; }
 
@@ -52,15 +63,38 @@
         {
             AuthMessage = $"User {user.Identity.Name} is authenticated.";
             claims = user.Claims;
+            FormatTokenTimes(user);
 
-            AccessTokenString = await TokenSvc.GetTokenAsync();
+            AccessTokenString = await TokenSvc.GetTokenAsync();                        
 
-            // surnameMessage = 
-            //     $"Surname: {user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value}";
         }
         else
         {
             AuthMessage = "The user is NOT authenticated.";
         }
+    }
+
+    private void FormatTokenTimes(ClaimsPrincipal cp)
+    {
+        var IssAt = cp.FindFirst(c => c.Type == "iat")?.Value;
+        var ExpAt = cp.FindFirst(c => c.Type == "exp")?.Value;
+        var NotBefore = cp.FindFirst(c => c.Type == "nbf")?.Value;
+
+        DateTimeOffset DtoIssAt = DateTimeOffset.FromUnixTimeSeconds(long.Parse(IssAt ?? "0"));
+        DateTimeOffset DtoExpAt = DateTimeOffset.FromUnixTimeSeconds(long.Parse(ExpAt ?? "0"));
+        DateTimeOffset DtoNotBefore = DateTimeOffset.FromUnixTimeSeconds(long.Parse(NotBefore ?? "0"));
+
+        DateTime IssuedAt = DtoIssAt.DateTime;
+        DateTime ExpiresOn = DtoExpAt.DateTime;
+        DateTime NotBeforeOn = DtoNotBefore.DateTime;
+
+        TokenIssuedAt = FormatMyDate(IssuedAt);
+        TokenExpiresAt = FormatMyDate(ExpiresOn); 
+        TokenNotBefore = FormatMyDate(NotBeforeOn);
+    }
+
+    private string FormatMyDate(DateTime dt)
+    {
+        return dt.ToEasternTimeZone().ToShortDateString() + " " + dt.ToEasternTimeZone().ToLongTimeString();
     }
 }
