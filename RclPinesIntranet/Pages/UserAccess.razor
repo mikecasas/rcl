@@ -34,7 +34,7 @@
     </ul>
 }
 
-@if (DisplayAccessToken)
+@if (DisplayToken)
 {
     <div style="width:1200px;overflow:auto">
         <pre>@AccessTokenString</pre>
@@ -51,8 +51,16 @@
     private string? TokenExpiresAt = string.Empty;
     private string? TokenNotBefore = string.Empty;
 
-    [Parameter]
-    public bool DisplayAccessToken { get; set; }
+
+    [CascadingParameter]
+    public AppVariables? AppVars { get; set; }
+
+    private bool DisplayToken = false;
+      
+    protected override void OnParametersSet()
+    {
+        DisplayToken = AppVars?.DisplayAccessToken ?? false;
+    }   
 
     private async Task GetClaimsPrincipalData()
     {    

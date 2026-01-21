@@ -1,14 +1,28 @@
-﻿
-<CascadingAuthenticationState>
+﻿@using RclPinesIntranet.Models
 
-    <Router AppAssembly="@typeof(App).Assembly" NotFoundPage="typeof(Pages.NotFound)"
-            AdditionalAssemblies="new[] { typeof(RclPinesIntranet.Pages.Login).Assembly} ">
-        <Found Context="routeData">
+<CascadingValue Value="AppVars">
 
-            @* Use the wrapper component as the DefaultLayout *@
-            <RouteView RouteData="@routeData" DefaultLayout="@typeof(DefaultLayoutWrapper)" />
-            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
-        </Found>  
-    </Router>
+    <CascadingAuthenticationState>
 
-</CascadingAuthenticationState>
+        <Router AppAssembly="@typeof(App).Assembly" NotFoundPage="typeof(Pages.NotFound)"
+                AdditionalAssemblies="new[] { typeof(RclPinesIntranet.Pages.Login).Assembly} ">
+            <Found Context="routeData">
+
+                @* Use the wrapper component as the DefaultLayout *@
+                <RouteView RouteData="@routeData" DefaultLayout="@typeof(DefaultLayoutWrapper)" />
+                <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+            </Found>  
+        </Router>
+
+    </CascadingAuthenticationState>
+
+</CascadingValue>
+
+
+
+@code {
+    private AppVariables AppVars = new()
+    {
+        DisplayAccessToken = true      
+    };
+}
