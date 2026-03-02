@@ -57,3 +57,10 @@ Below is sample code and styling
       }  
 
     ```
+
+# Miscellaneous
+
+* Bootstrap Styling
+
+align-items == vertical align
+justify-content == horizontal align
