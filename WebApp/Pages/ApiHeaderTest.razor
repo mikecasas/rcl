@@ -1,0 +1,45 @@
+﻿@page "/api-header-test"
+
+@inject IServiceBase ServiceBase
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@code {
+    private int currentCount = 0;
+
+    private async Task IncrementCount()
+    {
+        string SelectedValue = "PMS";
+        string Uri1 = "https://tws.ppines.com/munis-payroll/";
+
+        string Uri = $"{Uri1}workflow/get-by-process-id?processId={SelectedValue}";
+        string PayrollApiKey = "0a8c0429-9848-44bd-8e74-cc9d34c8d17b";
+        
+        var Headers = new Dictionary<string, string>
+            {
+                { "PayrollApiKey", PayrollApiKey }
+            };
+
+        var Resp = await ServiceBase.GetJsonWithHeadersAsync<Response>(Uri, true, Headers);
+    }
+
+
+    private class Response : BaseResponse
+    {
+
+       
+    }
+
+
+    private class BaseResponse
+    {
+        public string? Message { get; set; }
+        public bool IsSuccess { get; set; }
+    }
+}

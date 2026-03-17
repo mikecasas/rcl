@@ -1,4 +1,5 @@
-﻿using RclPinesIntranet.Services.Contracts;
+﻿using RclPinesIntranet.Services;
+using RclPinesIntranet.Services.Contracts;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -192,6 +193,8 @@ namespace RclPinesIntranet.Services
 
         private HttpClient GetHttpClient(string token)
         {
+            const string Auth = "Bearer";
+
             //No token was passed in
             if (string.IsNullOrEmpty(token))
             {
@@ -199,12 +202,15 @@ namespace RclPinesIntranet.Services
                 return _HttpClient;
             }
 
-            if (!_HttpClient.DefaultRequestHeaders.Contains("Bearer"))
+            //Clear all the heraders
+            _HttpClient.DefaultRequestHeaders.Clear();
+
+            if (!_HttpClient.DefaultRequestHeaders.Contains(Auth))
             {
                 Console.WriteLine($"There is no Bearer token in the HTTP client");
                 //Console.WriteLine(token);
 
-                _HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                _HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Auth, token);
             }
 
             //if (!_httpClient.DefaultRequestHeaders.Contains(Constants.AntiForgeryTokenHeaderName) && _siteState != null && !string.IsNullOrEmpty(_siteState.AntiForgeryToken))
@@ -249,8 +255,24 @@ namespace RclPinesIntranet.Services
             }
 
             return false;
-        }            
-       
+        }
+
+        public async Task<T> GetJsonWithHeadersAsync<T>(string uri, bool isFullUri, Dictionary<string, string> headers)
+        {
+            string FullUri = GetUrl(uri, isFullUri);
+
+            var H = await GetHttpClientWithHeadersAsync(headers);
+
+            var response = await H.GetAsync(FullUri, HttpCompletionOption.ResponseHeadersRead, CancellationToken.None);
+
+            if (CheckResponse(response) && ValidateJsonContent(response.Content))
+            {
+                return await response.Content.ReadFromJsonAsync<T>();
+            }
+            
+            return default;
+        }
+
         #endregion
     }
 }
