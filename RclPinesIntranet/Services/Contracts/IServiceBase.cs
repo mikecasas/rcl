@@ -10,6 +10,8 @@ namespace RclPinesIntranet.Services.Contracts
     {
         Task<T> GetJsonAsync<T>(string uri);
         Task<T> GetJsonAsync<T>(string uri, bool isFullUri);
+        
+        Task<T> GetJsonWithHeadersAsync<T>(string uri, bool isFullUri, Dictionary<string, string> headers);
 
         Task<T> PostJsonAsync<T>(string uri, T value);
         Task<TResult> PostJsonAsync<TValue, TResult>(string uri, TValue value);
