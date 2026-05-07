@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using RclPinesIntranet;
-using System.Buffers.Text;
 using WebApp;
 using WebApp.LocalServices;
 
@@ -16,13 +15,12 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 string BaseUrl = builder.Configuration.GetSection("BaseUrl").Value ?? string.Empty;
 string UrlAuth = builder.Configuration.GetSection("AuthUrl").Value ?? string.Empty;
 
-
 if (builder.HostEnvironment.IsProduction())
 {
     //builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Debug);
 
     //Production Auth using the base class
-    builder.Services.AddLibraryServices(UrlAuth, BaseUrl, null, null);
+    builder.Services.AddLibraryServices(UrlAuth, BaseUrl, null, null, "ppines_budget");
 }
 else
 {
@@ -32,7 +30,7 @@ else
     var L2 = new LocalAuthenticationService(L1);
 
     //Use the local auth services for testing
-    builder.Services.AddLibraryServices(UrlAuth, BaseUrl, L1, L2);
+    builder.Services.AddLibraryServices(UrlAuth, BaseUrl, L1, L2, "some_local_token");
 }
 
 //builder.Services.AddLibraryServices("https://tws.ppines.com/saas-admin/windows-auth/login", "https://tws.ppines.com/pines-budget-metrics", null, null);

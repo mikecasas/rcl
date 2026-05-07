@@ -5,19 +5,21 @@ using Radzen;
 using RclPinesIntranet.Config;
 using RclPinesIntranet.Services;
 using RclPinesIntranet.Services.Contracts;
+using System.Reflection.Metadata;
 
 namespace RclPinesIntranet
 {
     public static class ServiceCollectionExtensions
     {
         public static void AddLibraryServices(this IServiceCollection services, string loginEndpoint, string apiBaseUrl
-            ,AuthenticationStateProvider authenticationStateProvider, IAuthenticationService authenticationService)
+            ,AuthenticationStateProvider authenticationStateProvider, IAuthenticationService authenticationService
+            ,string tokenName)
         {           
             services.AddBlazoredLocalStorage();
 
             services.AddSingleton(new UrlLocations(loginEndpoint, apiBaseUrl));
                 
-            services.AddScoped<IServiceBaseConfig, DefaultServiceBaseConfig>();
+            services.AddScoped<IServiceBaseConfig>(sp => new DefaultServiceBaseConfig(tokenName));
             services.AddScoped<IServiceBase, ServiceBase>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshAuthenticationService, RefreshAuthenticationService>();
