@@ -13,13 +13,16 @@ namespace RclPinesIntranet
     {
         public static void AddLibraryServices(this IServiceCollection services, string loginEndpoint, string apiBaseUrl
             ,AuthenticationStateProvider authenticationStateProvider, IAuthenticationService authenticationService
-            ,string tokenName)
+            ,AuthExtra authExtra)
         {           
             services.AddBlazoredLocalStorage();
 
             services.AddSingleton(new UrlLocations(loginEndpoint, apiBaseUrl));
-                
-            services.AddScoped<IServiceBaseConfig>(sp => new DefaultServiceBaseConfig(tokenName));
+
+            services.AddScoped<AuthExtra, AuthExtra>(sp => authExtra);
+
+
+            services.AddScoped<IServiceBaseConfig>(sp => new DefaultServiceBaseConfig(authExtra));
             services.AddScoped<IServiceBase, ServiceBase>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshAuthenticationService, RefreshAuthenticationService>();

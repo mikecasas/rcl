@@ -10,7 +10,6 @@ namespace RclPinesIntranet.Services
         private readonly ILocalStorageService _LocalStorage;
         private readonly IServiceBaseConfig _Config;
 
-
         public TokenService(ILocalStorageService localStorage, IServiceBaseConfig config)
         {
             _LocalStorage = localStorage;
@@ -22,7 +21,7 @@ namespace RclPinesIntranet.Services
             string TokName = _Config.LocalStorageTokenName;
 
             Console.WriteLine($"Getting Token: {TokName}");
-            return await GetLocalToken(TokName);
+            return await GetLocalTokenAsync(TokName);
         }
 
         public async Task<string> GetRefreshTokenAsync()
@@ -30,10 +29,10 @@ namespace RclPinesIntranet.Services
             string TokName = _Config.LocalStorageRefreshTokenName;  
 
             Console.WriteLine($"Getting Refresh Token: {TokName}");
-            return await GetLocalToken(TokName);
+            return await GetLocalTokenAsync(TokName);
         }
 
-        private async Task<string> GetLocalToken(string tokenName)
+        private async Task<string> GetLocalTokenAsync(string tokenName)
         {
             string tok = String.Empty;
 
@@ -50,31 +49,31 @@ namespace RclPinesIntranet.Services
             return tok;
         }
 
-        public async Task DeleteLocalToken()
+        public async Task DeleteLocalTokenAsync()
         {
-            await DeleteToken(_Config.LocalStorageTokenName);
+            await DeleteTokenAsync(_Config.LocalStorageTokenName);
         }
 
-        public async Task DeleteLocalRefreshToken()
+        public async Task DeleteLocalRefreshTokenAsync()
         {
-            await DeleteToken(_Config.LocalStorageRefreshTokenName);
+            await DeleteTokenAsync(_Config.LocalStorageRefreshTokenName);
         }
-        private async Task DeleteToken(string tokenName)
+        private async Task DeleteTokenAsync(string tokenName)
         {
             await _LocalStorage.RemoveItemAsync(tokenName);
         }
-        public async Task<bool> IsToken()
+        public async Task<bool> IsTokenAsync()
         {
             var tok = await GetTokenAsync();
             return tok != null;
         }
-        public async Task<bool> IsTokenExpired()
+        public async Task<bool> IsTokenExpiredAsync()
         {
             var tok = await GetTokenAsync();
             return IsTheTokenExpired(tok);
         }
 
-        public async Task<bool> IsRefreshTokenExpired()
+        public async Task<bool> IsRefreshTokenExpiredAsync()
         {
             var tok = await GetRefreshTokenAsync();
             return IsTheTokenExpired(tok);

@@ -14,8 +14,8 @@ namespace RclPinesIntranet.Services
         public async Task CleanUpOnLogoutAsync()
         {
             //Delete the tokens
-            await _TokenService.DeleteLocalToken();
-            await _TokenService.DeleteLocalRefreshToken();
+            await _TokenService.DeleteLocalTokenAsync();
+            await _TokenService.DeleteLocalRefreshTokenAsync();
 
             RemoveAuthTokenFromHttpHeader();
         }
