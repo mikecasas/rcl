@@ -1,0 +1,44 @@
+﻿@inherits LayoutComponentBase
+
+<RadzenLayout>
+    <RadzenHeader>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+            <!-- The toggle button tracks the layout expansion state -->
+            <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
+            <RadzenLabel Text="My App Header" />
+        </RadzenStack>
+    </RadzenHeader>
+
+    <!-- Set custom width inline via Style attribute -->
+    <RadzenSidebar @bind-Expanded="@sidebarExpanded" Style="@GetSidebarStyle()">
+        <RadzenPanelMenu>
+            <RadzenPanelMenuItem Text="Home" Icon="home" Path="" />
+            <RadzenPanelMenuItem Text="Data" Icon="grid_on" Path="fetchdata" />
+        </RadzenPanelMenu>
+    </RadzenSidebar>
+
+    <RadzenBody>
+        <div class="rz-p-4">
+            @Body
+        </div>
+    </RadzenBody>
+</RadzenLayout>
+
+@code {
+    // Tracks state across transitions
+    bool sidebarExpanded = true;
+
+    
+    [Parameter]
+    public int SidebarWidth { get; set; }
+
+    private string GetSidebarStyle()
+    {
+        if(SidebarWidth == 0)
+        {
+            return "width: 350px;"; // Use default width
+        }
+
+        return $"width: {SidebarWidth}px;";
+    }
+}

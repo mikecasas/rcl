@@ -1,3 +1,44 @@
+:root {
+    --nav-width-expanded: 320px; /* Custom expanded width */
+    --nav-width-collapsed: 80px; /* Custom collapsed width */
+}
+
+/* Sidebar structure */
+.sidebar {
+    width: var(--nav-width-expanded);
+    transition: width 0.3s ease;
+}
+
+    .sidebar.collapsed {
+        width: var(--nav-width-collapsed);
+    }
+
+/* Main Content pushes to the right */
+.main {
+    margin-left: var(--nav-width-expanded);
+    transition: margin-left 0.3s ease;
+}
+
+    .main.collapsed-margin {
+        margin-left: var(--nav-width-collapsed);
+    }
+
+/* Mobile responsiveness adjustments */
+@media (max-width: 768.98px) {
+    .main, .main.collapsed-margin {
+        margin-left: 0;
+    }
+
+    .sidebar {
+        width: var(--nav-width-expanded);
+    }
+}
+
+
+
+
+
+
 /*html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }

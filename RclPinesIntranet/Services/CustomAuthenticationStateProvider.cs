@@ -44,8 +44,17 @@ namespace RclPinesIntranet.Services
 
             var AllClaimsExtracted = JwtParser.ParseClaimsFromJwt(Token);
 
-            var IsValid = CheckAudianceAndIssuer(AllClaimsExtracted);
+            bool IsValid = false;
 
+            if (_AuthExtra.ApplyIssueAuthLogic)
+            {
+                IsValid = CheckAudianceAndIssuer(AllClaimsExtracted);
+            }
+            else
+            {
+                IsValid = true;
+            }
+            
             if (IsValid) {
                 _HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", Token);
                 ClaimsIdentity identity = new ClaimsIdentity(AllClaimsExtracted, AuthType);

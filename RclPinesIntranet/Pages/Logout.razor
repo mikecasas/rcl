@@ -1,8 +1,9 @@
 @page "/logout"
 
 @inject Helper H
-
 @inject IAuthenticationService AuthenticationService
+
+<h3>You have successfully logged out</h3>
 
 @code {
 
@@ -10,6 +11,5 @@
 	{
 		await AuthenticationService.LogoutAsync();
         await H.CleanUpOnLogoutAsync();
-
 	}
 }
