@@ -3,7 +3,7 @@
 <RadzenComponents />
 
 <div class="page">
-    <div class="sidebar">
+    <div class="sidebar" style="width:@SidebarWidth">
         @NavContent
     </div>
 
@@ -32,6 +32,9 @@
 </div>
 
 @code {
+
+    [Parameter]
+    public string SidebarWidth { get; set; } = "250px";
 
     // This Content will be injected where @NavContent is placed
     [Parameter]

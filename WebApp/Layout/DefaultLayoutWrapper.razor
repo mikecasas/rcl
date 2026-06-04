@@ -1,7 +1,8 @@
-﻿@inherits LayoutComponentBase
+﻿@using RclPinesIntranet.Layout.Sidebar
+@inherits LayoutComponentBase
 @* This component IS the MainLayout, plus its custom parameters. *@
 
-<RclPinesIntranet.Layout.PinesIntranet.MainLayout>
+<RclPinesIntranet.Layout.PinesIntranet.MainLayout SidebarWidth="@Width">
     <NavContent>
         <SiteSpecificNavMenu />
     </NavContent>
@@ -23,3 +24,9 @@
         @Body 
     </Body>
 </RclPinesIntranet.Layout.PinesIntranet.MainLayout>
+
+@code {
+
+    string Width = "3500px";
+
+}
