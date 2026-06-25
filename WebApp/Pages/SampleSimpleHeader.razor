@@ -1,0 +1,34 @@
+﻿@* @layout RclPinesIntranet.Layout.SimpleHeaderLayout *@
+@page "/sample-simple-header"
+
+
+<RclPinesIntranet.Layout.HeaderContent>
+  
+
+    <div class="d-flex justify-content-between align-items-center h-100">
+
+        <div>
+            <h4 class="mb-0">Dashboard</h4>
+            <small>Overview of system status</small>
+        </div>
+
+        <div>
+            <button class="btn btn-primary">
+                New Report
+            </button>
+        </div>
+
+    </div>
+
+</RclPinesIntranet.Layout.HeaderContent>
+
+<h3>Dashboard Content</h3>
+
+@for (int i = 0; i < 100; i++)
+{
+    <div class="card mb-2">
+        <div class="card-body">
+            Record @i
+        </div>
+    </div>
+}

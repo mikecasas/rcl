@@ -1,0 +1,61 @@
+﻿@inherits LayoutComponentBase
+
+<RadzenComponents />
+
+@inject LayoutState LayoutState
+
+<div class="app-layout">
+
+    <div class="sidebar" style="width:@SidebarWidth">
+        @NavContent
+    </div>         
+
+    <div class="main-container">
+
+        <header class="top-header p-3">
+
+            @if (LayoutState.HeaderContent != null)
+            {
+                @LayoutState.HeaderContent
+            }
+
+        </header>
+
+        <main class="content-area">
+            @Body
+        </main>
+
+    </div>
+
+</div>
+
+@code {
+
+    [Parameter]
+    public string SidebarWidth { get; set; } = "650px";
+
+    // This Content will be injected where @NavContent is placed
+    [Parameter]
+    public RenderFragment? NavContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? HeaderContent { get; set; } // New Slot
+
+
+    protected override void OnInitialized()
+    {
+        LayoutState.OnChange += Refresh;
+    }
+
+    private void Refresh()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        LayoutState.OnChange -= Refresh;
+    }
+
+
+}

@@ -1,5 +1,19 @@
 # Pembroke Pines Intranet Razor Class Libary
 
+* New Auth model
+
+```sh
+    var AuthExtra = new RclPinesIntranet.Config.AuthExtra
+    {
+        Audience="cat",
+        Issuer="dog",
+        TokenName="some_token_name",
+    };
+
+    builder.Services.AddLibraryServices(UrlAuth, BaseUrl, null, null, AuthExtra);
+```
+
+
 * The nuget package for all intranet portals
 * Common code for all intranet portals including:
     * Login/Logout

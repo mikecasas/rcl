@@ -11,6 +11,8 @@ main {
 .sidebar {
     background-image: linear-gradient(180deg, var(--sidebar-color) 0%, var(--sidebar-color-transition) 70%);
     transition: var(--transition-props-fast);
+    height: 100vh;
+    overflow-y: auto;
 }
 
 .top-row {

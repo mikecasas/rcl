@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Radzen;
 using RclPinesIntranet.Config;
+using RclPinesIntranet.Layout;
 using RclPinesIntranet.Services;
 using RclPinesIntranet.Services.Contracts;
 using System.Reflection.Metadata;
@@ -26,6 +27,9 @@ namespace RclPinesIntranet
             services.AddScoped<IServiceBase, ServiceBase>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshAuthenticationService, RefreshAuthenticationService>();
+
+
+            services.AddScoped<LayoutState>();
 
             services.AddScoped<Helper>();
 

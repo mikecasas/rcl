@@ -1,0 +1,32 @@
+﻿@using RclPinesIntranet.Layout.Sidebar
+@inherits LayoutComponentBase
+@* This component IS the MainLayout, plus its custom parameters. *@
+
+<RclPinesIntranet.Layout.PinesIntranet.MainLayout SidebarWidth="@Width">
+    <NavContent>
+        <SiteSpecificNavMenu />
+    </NavContent>
+
+    <AuthorizationSection>
+        <RclPinesIntranet.Components.AuthLinks TenantNbr="1"></RclPinesIntranet.Components.AuthLinks>
+    </AuthorizationSection>
+
+    <HeaderContent>
+        <RclPinesIntranet.Layout.PinesIntranet.BudgetPortalSites BaseRoute="https://localhost:9999" HighlightLinkNbr="1" />
+
+    </HeaderContent>
+    <FooterContent>
+      
+    </FooterContent>
+    
+    @* Crucially, the ChildContent passed to this wrapper goes to the @Body of MainLayout *@
+    <Body>
+        @Body 
+    </Body>
+</RclPinesIntranet.Layout.PinesIntranet.MainLayout>
+
+@code {
+
+    string Width = "3500px";
+
+}
