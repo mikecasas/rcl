@@ -1,29 +1,25 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace RclPinesIntranet.Layout
+namespace RclPinesIntranet.Layout;
+
+public class LayoutState
 {
-    public class LayoutState
+    public event Action? OnChange;
+
+    private RenderFragment? _headerContent;
+
+    public RenderFragment? HeaderContent
     {
-        public event Action? OnChange;
-
-        private RenderFragment? _headerContent;
-
-        public RenderFragment? HeaderContent
+        get => _headerContent;
+        set
         {
-            get => _headerContent;
-            set
-            {
-                _headerContent = value;
-                OnChange?.Invoke();
-            }
+            _headerContent = value;
+            OnChange?.Invoke();
         }
+    }
 
-        public void ClearHeader()
-        {
-            HeaderContent = null;
-        }
+    public void ClearHeader()
+    {
+        HeaderContent = null;
     }
 }
