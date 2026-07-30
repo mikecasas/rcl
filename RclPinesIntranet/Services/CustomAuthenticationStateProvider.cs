@@ -46,22 +46,20 @@ namespace RclPinesIntranet.Services
 
             bool IsValid = false;
 
-            if (_AuthExtra.ApplyIssueAuthLogic)
-            {
-                IsValid = CheckAudianceAndIssuer(AllClaimsExtracted);
-            }
-            else
-            {
-                IsValid = true;
-            }
-            
+            IsValid = CheckAudianceAndIssuer(AllClaimsExtracted);
+                       
             if (IsValid) {
+
                 _HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", Token);
                 ClaimsIdentity identity = new ClaimsIdentity(AllClaimsExtracted, AuthType);
                 return new AuthenticationState(new ClaimsPrincipal(identity));
             }
             else
             {
+                //Since the token is not valid, we will delete the token and refresh token.
+                await _TokenService.DeleteLocalTokenAsync();
+                await _TokenService.DeleteLocalRefreshTokenAsync();
+
                 return Anonm;
             }
         }
@@ -131,11 +129,19 @@ namespace RclPinesIntranet.Services
 
             var aud = claims.Where(x => x.Type == "aud").FirstOrDefault();
             var iss = claims.Where(x => x.Type == "iss").FirstOrDefault();
+
             if (aud is null || iss is null)
             {
                 Console.WriteLine($"aud claim is null or iss claim is null");
                 return false;
-            }              
+            }
+
+            //Now checking for blank values. If the values are blank, then the token is not valid for our API.
+            if (string.IsNullOrEmpty(aud.Value) || string.IsNullOrEmpty(iss.Value))
+            {
+                Console.WriteLine($"aud or iss claim is empty");
+                return false;
+            }
 
             if (aud.Value == _AuthExtra.Audience && iss.Value == _AuthExtra.Issuer)
             {
