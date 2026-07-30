@@ -1,0 +1,17 @@
+﻿@inherits LayoutComponentBase
+
+<RclPinesIntranet.Layout.PinesIntranet.MainLayoutNoHeader SidebarWidth="@SidebarWidth">
+
+     <NavContent>
+        <NavMenu />     
+    </NavContent>        
+
+    <Body>      
+        @Body
+    </Body>
+
+</RclPinesIntranet.Layout.PinesIntranet.MainLayoutNoHeader>
+
+@code {
+    string SidebarWidth = "275px";   
+}

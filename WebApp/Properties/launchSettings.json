@@ -13,7 +13,7 @@
     "https": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "sample-simple-header",
+      "launchUrl": "test-mike",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

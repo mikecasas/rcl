@@ -1,0 +1,30 @@
+﻿@inherits LayoutComponentBase
+
+@using Microsoft.Extensions.Options
+@inject IOptions<MySettings> Settings
+
+<RclPinesIntranet.Layout.PinesIntranet.MainLayout SidebarWidth="@SidebarWidth">
+
+     <NavContent>
+        <NavMenu />     
+    </NavContent>
+
+    <AuthorizationSection>
+       <RclPinesIntranet.Components.AuthLinks TenantNbr="@Settings.Value.TenantNbr"></RclPinesIntranet.Components.AuthLinks>
+    </AuthorizationSection>
+
+    <HeaderContent>
+
+      @*  Not needed in this app *@
+      @*   <RclPinesIntranet.Layout.PinesIntranet.BudgetPortalSites BaseRoute="https://tws.ppines.com" HighlightLinkNbr="1" /> *@
+    </HeaderContent>
+
+    <Body>
+        @Body
+    </Body>
+
+</RclPinesIntranet.Layout.PinesIntranet.MainLayout>
+
+@code {
+    string SidebarWidth = "350px";
+}

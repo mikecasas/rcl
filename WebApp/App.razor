@@ -1,4 +1,6 @@
-﻿@using RclPinesIntranet.Models
+﻿@using Microsoft.Extensions.Options
+
+@inject IOptions<MySettings> Settings
 
 <CascadingValue Value="AppVars">
 
@@ -7,10 +9,25 @@
         <Router AppAssembly="@typeof(App).Assembly" NotFoundPage="typeof(Pages.NotFound)"
                 AdditionalAssemblies="new[] { typeof(RclPinesIntranet.Pages.Login).Assembly} ">
             <Found Context="routeData">
+  
+                <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(DefaultLayoutWrapperV1)">
+                    <Authorizing>
+                        <text>Please wait, we are authorizing the user.</text>
+                    </Authorizing>
 
-                @* Use the wrapper component as the DefaultLayout *@
-                <RouteView RouteData="@routeData" DefaultLayout="@typeof(DefaultLayoutWrapper)" />
-                <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+                    <NotAuthorized>
+                        <h1>Access Denied</h1>
+                        <h4>You do not have permission to view this page.</h4>
+
+                        <h3>Please login to access the application.</h3>
+
+                        <h3>If you are unable to login, contact TSD for access.</h3>
+
+                        <a href="Login/@Settings.Value.TenantNbr" class="btn btn-primary"><i class="bi bi-unlock-fill"></i> Authenticate</a>
+                    </NotAuthorized>
+
+                </AuthorizeRouteView>
+             
             </Found>  
         </Router>
 
@@ -26,3 +43,9 @@
         DisplayAccessToken = true      
     };
 }
+
+
+
+
+
+@* DefaultLayoutWrapper *@
