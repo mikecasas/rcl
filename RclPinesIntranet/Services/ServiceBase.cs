@@ -1,4 +1,5 @@
-﻿using RclPinesIntranet.Services;
+﻿using Radzen.Blazor;
+using RclPinesIntranet.Services;
 using RclPinesIntranet.Services.Contracts;
 using System.Net;
 using System.Net.Http.Headers;
@@ -40,6 +41,8 @@ namespace RclPinesIntranet.Services
             }
 
             var Tok = await _TokenService.GetTokenAsync();
+
+            Console.WriteLine($"Get Json: {uri}");
 
             var response = await GetHttpClient(Tok).GetAsync(FullUri, HttpCompletionOption.ResponseHeadersRead, CancellationToken.None);
 

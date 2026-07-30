@@ -105,5 +105,10 @@ namespace RclPinesIntranet.Services
                 return false;
             }
         }
+
+        public bool IsTokenExpired(string Token)
+        {
+            return IsTheTokenExpired(Token);
+        }
     }
 }

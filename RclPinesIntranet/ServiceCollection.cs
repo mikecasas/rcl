@@ -22,7 +22,6 @@ namespace RclPinesIntranet
 
             services.AddScoped<AuthExtra, AuthExtra>(sp => authExtra);
 
-
             services.AddScoped<IServiceBaseConfig>(sp => new DefaultServiceBaseConfig(authExtra));
             services.AddScoped<IServiceBase, ServiceBase>();
             services.AddScoped<ITokenService, TokenService>();
