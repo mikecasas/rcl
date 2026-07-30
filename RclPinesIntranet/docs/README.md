@@ -1,5 +1,7 @@
 # Pembroke Pines Intranet Razor Class Libary
 
+2.0.0 - Breaking Changes
+
 * New Auth model
 
 ```sh
