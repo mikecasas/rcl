@@ -6,6 +6,7 @@
         Task<string> GetRefreshTokenAsync();
         Task<bool> IsTokenAsync();
         Task<bool> IsTokenExpiredAsync();
+        bool IsTokenExpired(string Token);
         Task<bool> IsRefreshTokenExpiredAsync();
         Task DeleteLocalTokenAsync();
         Task DeleteLocalRefreshTokenAsync();

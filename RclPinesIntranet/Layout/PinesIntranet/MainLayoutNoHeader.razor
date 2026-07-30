@@ -14,7 +14,7 @@
 
         <header class="top-header p-3">
 
-            @if (LayoutState.HeaderContent != null)
+            @if (LayoutState.HeaderContent is not null)
             {
                 @LayoutState.HeaderContent
             }
@@ -56,6 +56,4 @@
     {
         LayoutState.OnChange -= Refresh;
     }
-
-
 }
