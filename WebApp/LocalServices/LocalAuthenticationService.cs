@@ -17,6 +17,9 @@ namespace WebApp.LocalServices
         {
            await Task.Delay(500); // Simulate some delay
 
+            Console.WriteLine($"LocalAuthenticationService() - LoginAsync");
+
+
             //Generated from http://jwtbuilder.jamiekurtz.com/
             // Jwt key is 'password'
 
@@ -27,6 +30,8 @@ namespace WebApp.LocalServices
 
         async Task IAuthenticationService.LogoutAsync()
         {
+            Console.WriteLine($"LocalAuthenticationService.LogoutAsync() - LogoutAsync");
+
             await Task.Delay(500); // Simulate some delay
 
             var AuthThing = ((LocalAuthenticationStateProvider)_Local);

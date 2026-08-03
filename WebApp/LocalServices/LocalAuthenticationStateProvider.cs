@@ -2,37 +2,41 @@
 using RclPinesIntranet.Services;
 using System.Security.Claims;
 
-namespace WebApp.LocalServices
+namespace WebApp.LocalServices;
+
+public class LocalAuthenticationStateProvider : AuthenticationStateProvider
 {
-
-    public class LocalAuthenticationStateProvider : AuthenticationStateProvider
+    private const string AuthType = "jwtAuthType";
+ 
+    public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        private const string AuthType = "jwtAuthType";
+        Console.WriteLine($"LocalAuthenticationStateProvider.GetAuthenticationStateAsync()");    
 
-        public override async Task<AuthenticationState> GetAuthenticationStateAsync()
-        {
-            //var Identity2 = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, "TestUser") }, "CustomAuth");
+        //var Identity2 = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, "TestUser") }, "CustomAuth");
 
-            var AllClaimsExtracted = JwtParser.ParseClaimsFromJwt(LocalKey.Tok);
-            ClaimsIdentity Identity = new ClaimsIdentity(AllClaimsExtracted, AuthType);
+        var AllClaimsExtracted = JwtParser.ParseClaimsFromJwt(LocalKey.Tok);
+        ClaimsIdentity Identity = new ClaimsIdentity(AllClaimsExtracted, AuthType);
 
-            return new AuthenticationState(new ClaimsPrincipal(Identity));
-        }
+        return new AuthenticationState(new ClaimsPrincipal(Identity));
+    }
 
-        public void NotifyUserAuthentication(string token)
-        {
-            //var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token), AuthType));
-            //var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
-            //NotifyAuthenticationStateChanged(authState);
+    public void NotifyUserAuthentication(string token)
+    {
+        Console.WriteLine($"LocalAuthenticationStateProvider.NotifyUserAuthentication()");
 
-            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
-        }
+        //var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token), AuthType));
+        //var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
+        //NotifyAuthenticationStateChanged(authState);
 
-        public void NotifyUserLogout()
-        {
-            ClaimsIdentity identity = new ClaimsIdentity();
-            var AuthState = Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity)));
-            NotifyAuthenticationStateChanged(AuthState);
-        }
+        NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+    }
+
+    public void NotifyUserLogout()
+    {
+        Console.WriteLine($"LocalAuthenticationStateProvider.NotifyUserLogout()");
+
+        ClaimsIdentity identity = new ClaimsIdentity();
+        var AuthState = Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity)));
+        NotifyAuthenticationStateChanged(AuthState);
     }
 }
