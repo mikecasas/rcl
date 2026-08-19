@@ -2,14 +2,16 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using RclPinesIntranet;
-using RclPinesIntranet.Services;
 using RclPinesIntranet.Services.Contracts;
 using WebApp;
 using WebApp.LocalServices;
+using WebApp.Models;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
+
+builder.Services.Configure<MySettings>(builder.Configuration.GetSection("MySettings"));
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
@@ -21,19 +23,29 @@ string UrlAuth = builder.Configuration.GetSection("AuthUrl").Value ?? string.Emp
 var AuthExtra = new RclPinesIntranet.Config.AuthExtra();
 builder.Configuration.GetSection("AuthSettings").Bind(AuthExtra);
 
-
 builder.Services.AddBaseServices(UrlAuth, ApiBaseUrl, AuthExtra);
 
-
 //Set the custom services for authentication, this will override the default services in the library. The library will use these services instead of the default ones.
-
 
 builder.Services.AddScoped<IAuthenticationService, LocalAuthenticationService>();
 builder.Services.AddScoped<AuthenticationStateProvider, LocalAuthenticationStateProvider>();
 
-
-
 builder.Services.AddCustomAuthenticationServices(false);
+
+await builder.Build().RunAsync();
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //if (builder.HostEnvironment.IsProduction())
 //{
@@ -73,4 +85,3 @@ builder.Services.AddCustomAuthenticationServices(false);
 
 //builder.Services.AddLibraryServices("https://tws.ppines.com/saas-admin/windows-auth/login", "https://tws.ppines.com/pines-budget-metrics", null, null);
 
-await builder.Build().RunAsync();

@@ -13,10 +13,18 @@ namespace RclPinesIntranet
     {
         public static void AddBaseServices(this IServiceCollection services, string loginEndpoint, string apiBaseUrl, AuthExtra authExtra)
         {
+            Console.WriteLine($"Auth Extra Token Name: {authExtra.TokenName}");
+
+            Console.WriteLine("Nuget Package Auth Extra Settings:");
+            Console.WriteLine($"Token Audience: {authExtra.Audience}");
+            Console.WriteLine($"Issuer: {authExtra.Issuer}");
+            Console.WriteLine($"Token Name: {authExtra.TokenName}");
+
+
             services.AddBlazoredLocalStorage();
             services.AddSingleton(new UrlLocations(loginEndpoint, apiBaseUrl));
             services.AddScoped<AuthExtra, AuthExtra>(sp => authExtra);
-            services.AddScoped<IServiceBaseConfig>(sp => new DefaultServiceBaseConfig(new AuthExtra()));
+            services.AddScoped<IServiceBaseConfig>(sp => new DefaultServiceBaseConfig(authExtra));
             services.AddScoped<IServiceBase, ServiceBase>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshAuthenticationService, RefreshAuthenticationService>();
@@ -31,78 +39,29 @@ namespace RclPinesIntranet
             services.AddScoped<ConfigService>();
         }
 
-
-        public static void AddCustomAuthenticationServices(this IServiceCollection services, bool useProjectAuth)
+        public static void AddCustomAuthenticationServices(this IServiceCollection services, bool useBaseProjectAuth)
         {
-
-            if(useProjectAuth)
+            if(useBaseProjectAuth)
             {
                 services.AddScoped<IAuthenticationService, AuthenticationService>();
                 services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
-            }
-                
-                
-
-
-
-
-
-            ////Overide the default authentication service with the one provided by the caller
-            //if (authenticationService is not null)
-            //{
-            //    services.AddScoped<IAuthenticationService>(sp => authenticationService);
-            //}
-            //else
-            //{
-            //    services.AddScoped<IAuthenticationService, AuthenticationService>();
-            //}
-        }
-
-
-
-        public static void AddLibraryServices(this IServiceCollection services, string loginEndpoint, string apiBaseUrl
-            ,AuthenticationStateProvider authenticationStateProvider, IAuthenticationService authenticationService
-            ,AuthExtra authExtra)
-        {           
-            //services.AddBlazoredLocalStorage();
-            //services.AddSingleton(new UrlLocations(loginEndpoint, apiBaseUrl));
-
-            //services.AddScoped<AuthExtra, AuthExtra>(sp => authExtra);
-
-            //services.AddScoped<IServiceBaseConfig>(sp => new DefaultServiceBaseConfig(authExtra));
-            //services.AddScoped<IServiceBase, ServiceBase>();
-            //services.AddScoped<ITokenService, TokenService>();
-            //services.AddScoped<IRefreshAuthenticationService, RefreshAuthenticationService>();
-
-            //services.AddScoped<LayoutState>();
-            //services.AddScoped<Helper>();
-
-            //Overide the default authentication service with the one provided by the caller
-            if (authenticationService is not null)
-            {
-                services.AddScoped<IAuthenticationService>(sp => authenticationService);
-            }
-            else
-            {
-                services.AddScoped<IAuthenticationService, AuthenticationService>();
-            }
-
-            //Overide the default authentication service with the one provided by the caller
-            if (authenticationService is not null)
-            {
-                services.AddScoped<AuthenticationStateProvider>(sp => authenticationStateProvider);
-            }
-            else
-            {
-                services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
-            }
-
-            //services.AddAuthorizationCore();
-            //services.AddRadzenComponents();         
-
-            //Utility classes for code reuse to inject into Blazor pages
-            //services.AddScoped<Notifications>();
-            //services.AddScoped<ConfigService>();
-        }
+            }              
+        }       
     }
 }
+
+
+
+
+
+
+
+////Overide the default authentication service with the one provided by the caller
+//if (authenticationService is not null)
+//{
+//    services.AddScoped<IAuthenticationService>(sp => authenticationService);
+//}
+//else
+//{
+//    services.AddScoped<IAuthenticationService, AuthenticationService>();
+//}

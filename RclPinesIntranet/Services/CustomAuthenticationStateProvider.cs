@@ -145,9 +145,11 @@ namespace RclPinesIntranet.Services
 
             if (aud.Value == _AuthExtra.Audience && iss.Value == _AuthExtra.Issuer)
             {
+                Console.WriteLine($"The Aud. {aud.Value} and Iss. {iss.Value} match...");
                 return true;
             }
             {
+                Console.WriteLine($"The Aud. {aud.Value} and Iss. {iss.Value} do not match...Claim Audience {aud.Value} Claim Issu. {iss.Value}...Auth Extra Audience {_AuthExtra.Audience} Auth Extra Issuer {_AuthExtra.Issuer}");
                 return false;
             }            
         }
