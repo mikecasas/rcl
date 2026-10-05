@@ -1,11 +1,20 @@
 ﻿@page "/"
 
+@inject Notifications Ns
+
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, Project!</h1>
 
 Welcome to your new app. There is no auth on this page!
 
+
+<RadzenTemplateForm Data="@Cat" Submit="@(async (string args) => { await Submit(args); })">
+
+ 
+    <RadzenButton ButtonType="ButtonType.Submit" Icon="search" Text="Search" />
+
+</RadzenTemplateForm>
 
 <h3>Main Auth App</h3>
 
@@ -17,3 +26,14 @@ Welcome to your new app. There is no auth on this page!
         <p class="text-danger">Parent project sees: User is NOT logged in.</p>
     </NotAuthorized>
 </AuthorizeView>
+
+
+@code {
+
+    string Cat = "Home";
+
+    async Task Submit(string arg)
+    {
+        Ns.NotifyThemSuccess(arg);
+    }
+}

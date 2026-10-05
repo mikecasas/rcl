@@ -1,6 +1,4 @@
-﻿using Radzen.Blazor;
-using RclPinesIntranet.Services;
-using RclPinesIntranet.Services.Contracts;
+﻿using RclPinesIntranet.Services.Contracts;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -27,8 +25,13 @@ namespace RclPinesIntranet.Services
             return await GetJsonAsync<T>(uri, false);
         }
 
-        public async Task<T> GetJsonAsync<T>(string uri, bool isfullUri)
+        public async Task<T> GetJsonAsync<T>(string uri, bool isfullUri, string token)
         {
+            if (string.IsNullOrEmpty(token))
+            {
+                Console.WriteLine($"Error:2000: The token passed into the method is null or empty.");
+            }
+
             string FullUri = string.Empty;
 
             if (isfullUri)
@@ -39,19 +42,37 @@ namespace RclPinesIntranet.Services
             {
                 FullUri = FullUrl(uri);
             }
-
-            var Tok = await _TokenService.GetTokenAsync();
-
+         
             Console.WriteLine($"Get Json: {uri}");
 
-            var response = await GetHttpClient(Tok).GetAsync(FullUri, HttpCompletionOption.ResponseHeadersRead, CancellationToken.None);
+            var response = await GetHttpClient(token).GetAsync(FullUri, HttpCompletionOption.ResponseHeadersRead, CancellationToken.None);
 
             if (CheckResponse(response) && ValidateJsonContent(response.Content))
             {
-                return await response.Content.ReadFromJsonAsync<T>();
+                var result = await response.Content.ReadFromJsonAsync<T>();
+
+                if(result is null)
+                {
+                    return default;
+                } else
+                {
+                    return result;
+                }               
             }
 
             return default;
+        }
+
+        public async Task<T> GetJsonAsync<T>(string uri, bool isfullUri)
+        {
+            var Tok = await _TokenService.GetTokenAsync();
+
+            if (string.IsNullOrEmpty(Tok))
+            {
+                Console.WriteLine($"Error:8675309: Could not get a token from Local Storage.");               
+            }
+
+            return await GetJsonAsync<T>(uri, isfullUri, Tok);          
         }
 
         #endregion
@@ -201,25 +222,19 @@ namespace RclPinesIntranet.Services
             //No token was passed in
             if (string.IsNullOrEmpty(token))
             {
-                Console.WriteLine($"There token passed in was null or empty.");
+                Console.WriteLine($"Error:100: The token passed in was null or empty.");
                 return _HttpClient;
             }
 
-            //Clear all the heraders
+            //Clear all the headers
             _HttpClient.DefaultRequestHeaders.Clear();
 
             if (!_HttpClient.DefaultRequestHeaders.Contains(Auth))
             {
                 Console.WriteLine($"There is no Bearer token in the HTTP client");
-                //Console.WriteLine(token);
-
                 _HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Auth, token);
             }
 
-            //if (!_httpClient.DefaultRequestHeaders.Contains(Constants.AntiForgeryTokenHeaderName) && _siteState != null && !string.IsNullOrEmpty(_siteState.AntiForgeryToken))
-            //{
-            //    _httpClient.DefaultRequestHeaders.Add(Constants.AntiForgeryTokenHeaderName, _siteState.AntiForgeryToken);
-            //}
             return _HttpClient;
         }
 
@@ -231,15 +246,9 @@ namespace RclPinesIntranet.Services
             if (partialUrl.Contains("login"))
             {
                 return _UrlLocations.LoginEndpoint;
-
-            }else if (partialUrl.Contains("refresh-endpoint"))
-            {
-                return $"{BaseUrl}/{partialUrl}";
             }
-            else
-            {
-                return $"{BaseUrl}/{partialUrl}";
-            }              
+            return $"{BaseUrl}/{partialUrl}";
+              
         }
 
         private bool ValidateJsonContent(HttpContent content)
