@@ -1,14 +1,15 @@
-﻿namespace RclPinesIntranet.Services.Contracts
+﻿namespace RclPinesIntranet.Services.Contracts;
+
+public interface ITokenService
 {
-    public interface ITokenService
-    {
-        Task<string> GetTokenAsync();
-        Task<string> GetRefreshTokenAsync();
-        Task<bool> IsTokenAsync();
-        Task<bool> IsTokenExpiredAsync();
-        bool IsTokenExpired(string Token);
-        Task<bool> IsRefreshTokenExpiredAsync();
-        Task DeleteLocalTokenAsync();
-        Task DeleteLocalRefreshTokenAsync();
-    }
+    Task<string> GetTokenAsync();
+    Task<string> GetRefreshTokenAsync();
+    Task<bool> IsTokenAsync();
+    Task<bool> IsTokenExpiredAsync();
+    bool IsTokenExpired(string Token);
+    Task<bool> IsRefreshTokenExpiredAsync();
+    Task DeleteLocalTokenAsync();
+    Task DeleteLocalRefreshTokenAsync();
+
+    Task<string> GetUserIdAsync();
 }

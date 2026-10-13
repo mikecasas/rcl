@@ -7,9 +7,13 @@
 <RadzenComponents />
 
 <div class="page">
-    <div class="sidebar" style="width:@SidebarWidth">
-        @NavContent
-    </div>
+
+    @if (SidebarWidth != "0")
+    {
+        <div class="sidebar" style="width:@SidebarWidth">
+            @NavContent
+        </div>
+    }     
 
     <main>
           <div class="d-flex bd-highlight top-row">
@@ -36,6 +40,9 @@
 
 @code {
 
+    /// <summary>
+    /// Customize the width of the sidebar. The default value is "250px". A value of 0 will hide the sidebar completely.
+    /// </summary>
     [Parameter]
     public string SidebarWidth { get; set; } = "250px";
 

@@ -1,5 +1,7 @@
 # Pembroke Pines Intranet Razor Class Libary
 
+3.1.0 - Adds GetUserIdAsync() to the token service to get the user id from the token.
+
 3.0.0 - Breaking Changes
 
 * Uses the lastest versions of Radzen (12.0.5) and .NET 10 (10.0.12)
