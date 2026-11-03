@@ -1,5 +1,4 @@
 ﻿using Blazored.LocalStorage;
-using Radzen.Blazor;
 using RclPinesIntranet.Config;
 using RclPinesIntranet.Services.Contracts;
 
@@ -117,6 +116,17 @@ public class TokenService : ITokenService
     /// <returns>Claim needs to be 'UserId'</returns>
     public async Task<string> GetUserIdAsync()
     {
+        return await DryGetCalaimValueByNameAsync("UserId");        
+    }
+
+    public async Task<string> GetClaimValueByNameAsync(string claimName)
+    {
+        return await DryGetCalaimValueByNameAsync(claimName);
+    }
+
+
+    private async Task<string> DryGetCalaimValueByNameAsync(string claimName)
+    {
         var Tok = await GetTokenAsync();
 
         if (Tok == null)
@@ -124,15 +134,17 @@ public class TokenService : ITokenService
 
         var Claims = JwtParser.ParseClaimsFromJwt(Tok);
 
-        var TheUser = Claims.Where(claim => claim.Type.Equals("UserId")).FirstOrDefault();
+        var ClaimValue = Claims.Where(claim => claim.Type.Equals(claimName)).FirstOrDefault();
 
-        if (TheUser is null)
+        if (ClaimValue is null)
         {
             return string.Empty;
         }
         else
         {
-            return TheUser.Value;
+            return ClaimValue.Value;
         }
     }
+
+
 }

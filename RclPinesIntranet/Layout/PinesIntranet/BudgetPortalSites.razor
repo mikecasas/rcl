@@ -29,7 +29,7 @@
     string Link4Url = string.Empty;
     string Link5Url = string.Empty;
 
-    private string _Fund = string.Empty;
+    private string? _Fund = string.Empty;
 
     [Parameter]
     public string? BaseRoute { get; set; }
@@ -55,69 +55,56 @@
 
         Nav.LocationChanged += HandleLocationChanged;
 
-        SetClasses();
-
-        base.OnInitialized();
+        SetClasses();       
     }
 
-    void HandleLocationChanged(object sender, LocationChangedEventArgs e)
+    void HandleLocationChanged(object? sender, LocationChangedEventArgs e)
     {
         SetClasses();        
     }
 
     private void SetClasses()
     {
-        if(HighlightLinkNbr==0)
+        if(HighlightLinkNbr == 0)
         {
-            Link1Css = string.Empty;
-            Link2Css = string.Empty;
-            Link3Css = string.Empty;
-            Link4Css = string.Empty;
-            Link5Css = string.Empty;
+            SetThemCssAllEmpty();
+            StateHasChanged();
+            return;
+
         }
-        else if(HighlightLinkNbr==1)
+        else if(HighlightLinkNbr == 1)
         {
-            Link1Css = A;
-            Link2Css = string.Empty;
-            Link3Css = string.Empty;
-            Link4Css = string.Empty;
-            Link5Css = string.Empty;
+            SetThemCssAllEmpty();
+            Link1Css = A;          
+            StateHasChanged();
             return;
         }
-        else if(HighlightLinkNbr==2)
+        else if(HighlightLinkNbr == 2)
         {
-            Link1Css = string.Empty;
-            Link2Css = A;
-            Link3Css = string.Empty;
-            Link4Css = string.Empty;
-            Link5Css = string.Empty;
+            SetThemCssAllEmpty();          
+            Link2Css = A;   
+            StateHasChanged();
             return;
         }
-        else if(HighlightLinkNbr==3)
+        else if(HighlightLinkNbr == 3)
         {
-            Link1Css = string.Empty;
-            Link2Css = string.Empty;
+            SetThemCssAllEmpty();
             Link3Css = A;
-            Link4Css = string.Empty;
-            Link5Css = string.Empty;
+            StateHasChanged();
             return;
         }
-        else if(HighlightLinkNbr==4)
+        else if(HighlightLinkNbr == 4)
         {
-            Link1Css = string.Empty;
-            Link2Css = string.Empty;
-            Link3Css = string.Empty;
+            SetThemCssAllEmpty();
             Link4Css = A;
-            Link5Css = string.Empty;
+            StateHasChanged();
             return;
         }
-        else if(HighlightLinkNbr==5)
+        else if(HighlightLinkNbr == 5)
         {
-            Link1Css = string.Empty;
-            Link2Css = string.Empty;
-            Link3Css = string.Empty;
-            Link4Css = string.Empty;
+            SetThemCssAllEmpty();
             Link5Css = A;
+            StateHasChanged();
             return;
         }
 
@@ -128,7 +115,7 @@
             SetStuff("17");
             return;
         }     
-        
+
         if (Q.Contains("city-funds"))
         {
             SetStuff("001");
@@ -162,34 +149,33 @@
         SetStuff("001");
     }
 
+    private void SetThemCssAllEmpty()
+    {
+        Link1Css = string.Empty;
+        Link2Css = string.Empty;
+        Link3Css = string.Empty;
+        Link4Css = string.Empty;
+        Link5Css = string.Empty;
+    }
+
     private void SetStuff(string fund)
     {
         if(string.IsNullOrEmpty(fund))
         {
-            Link1Url = string.Empty;
-            Link2Url = string.Empty;
-            Link3Url = string.Empty;
-            Link4Url = string.Empty;
-            Link5Url = string.Empty;
-
+            SetThemCssAllEmpty();
+            StateHasChanged();
             return; 
         }
 
+        SetThemCssAllEmpty();
+
         if (fund.StartsWith("17"))
-        {
-            Link1Url = string.Empty;
-            Link2Url = string.Empty;
-            Link3Url = A;
-            Link4Url = string.Empty;
-            Link5Url = string.Empty;
+        {        
+            Link3Css = A;
         }
         else
-        {
-            Link1Url = string.Empty;
-            Link2Url = A;
-            Link3Url = string.Empty;
-            Link4Url = string.Empty;
-            Link5Url = string.Empty;
+        {           
+            Link2Css = A;          
         }
 
         StateHasChanged();

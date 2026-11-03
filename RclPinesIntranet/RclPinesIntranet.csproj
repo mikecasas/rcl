@@ -8,7 +8,7 @@
     <RootNamespace>RclPinesIntranet</RootNamespace>
     <AssemblyName>RclPinesIntranet</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>3.1.0</Version>
+    <Version>3.2.0</Version>
     <Company>City of Pembroke Pines, Florida</Company>
     <Authors>Technology Services Department</Authors>
     <Description>Razor Class library</Description>
@@ -27,7 +27,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="10.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="10.0.12" />
     <PackageReference Include="Radzen.Blazor" Version="12.0.5" />
-    <PackageReference Include="Tsd.Utils" Version="4.0.0" />
+    <PackageReference Include="Tsd.Utils" Version="4.1.0" />
   </ItemGroup>
 
   <ItemGroup>

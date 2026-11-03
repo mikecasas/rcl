@@ -12,4 +12,6 @@ public interface ITokenService
     Task DeleteLocalRefreshTokenAsync();
 
     Task<string> GetUserIdAsync();
+
+    Task<string> GetClaimValueByNameAsync(string claimName);
 }
