@@ -9,7 +9,7 @@
     <RootNamespace>WasmBaseServices</RootNamespace>
     <AssemblyName>WasmBaseServices</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <Company>CodeBuoy</Company>
     <Authors>Mike</Authors>
     <Description>Class library for WASM applications</Description>
