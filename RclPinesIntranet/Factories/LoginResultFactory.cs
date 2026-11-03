@@ -1,25 +1,24 @@
-﻿using RclPinesIntranet.Models;
+﻿
+using WasmBaseServices.Models;
 
+namespace RclPinesIntranet.Factories;
 
-namespace RclPinesIntranet.Factories
+public class LoginResultFactory
 {
-    public class LoginResultFactory
+    public static LoginResult GetSuccessLoginResult()
     {
-        public static LoginResult GetSuccessLoginResult()
-        {
-            return new LoginResult { IsSuccess = true };
-        }
+        return new LoginResult { IsSuccess = true };
+    }
 
-        public static LoginResult GetSuccessLoginResult(string defaultPage)
-        {
+    public static LoginResult GetSuccessLoginResult(string defaultPage)
+    {
 
-            return new LoginResult { IsSuccess = true, DefaultPage = defaultPage };
-        }
+        return new LoginResult { IsSuccess = true, DefaultPage = defaultPage };
+    }
 
-        public static LoginResult GetFailureLoginResult()
-        {
+    public static LoginResult GetFailureLoginResult()
+    {
 
-            return new LoginResult { IsSuccess = false };
-        }
+        return new LoginResult { IsSuccess = false };
     }
 }

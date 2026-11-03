@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="RclPinesIntranet/RclPinesIntranet.csproj" />
+  <Project Path="WasmBaseServices/WasmBaseServices.csproj" Id="131e1787-45af-493c-bb30-fa1a784c5e47" />
   <Project Path="WebApp/WebApp.csproj" />
 </Solution>

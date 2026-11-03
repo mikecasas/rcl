@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+
+    <RootNamespace>WasmBaseServices</RootNamespace>
+    <AssemblyName>WasmBaseServices</AssemblyName>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.0.1</Version>
+    <Company>CodeBuoy</Company>
+    <Authors>Mike</Authors>
+    <Description>Class library for WASM applications</Description>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <None Include="docs\readme.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+    <PackageReference Include="Radzen.Blazor" Version="12.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="10.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="10.0.12" />
+    <!--<PackageReference Include="Tsd.Utils" Version="4.1.0" />-->
+  </ItemGroup>
+
+
+
+  <!-- Only pack on rlease. This allows for debugging -->
+  <Target Condition="'$(Configuration)' == 'Release'" Name="CopyPackage" AfterTargets="Pack">
+    <!--<Copy SourceFiles="$(ProjectDir)\bin\Release\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="H:\pines-nuget" />-->
+    <Copy SourceFiles="$(ProjectDir)\bin\Release\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="C:\Users\mc\Desktop\PublishedApps\local-nuget" />
+  </Target>
+
+
+</Project>

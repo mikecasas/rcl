@@ -28,6 +28,7 @@
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="10.0.12" />
     <PackageReference Include="Radzen.Blazor" Version="12.0.5" />
     <PackageReference Include="Tsd.Utils" Version="4.1.0" />
+    <PackageReference Include="WasmBaseServices" Version="0.0.1" />
   </ItemGroup>
 
   <ItemGroup>
