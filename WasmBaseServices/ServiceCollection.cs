@@ -6,7 +6,7 @@ using WasmBaseServices.Config;
 using WasmBaseServices.Services;
 using WasmBaseServices.Services.Contracts;
 
-namespace RclPinesIntranet;
+namespace WasmBaseServices;
 
 public static class ServiceCollectionExtensions
 {
